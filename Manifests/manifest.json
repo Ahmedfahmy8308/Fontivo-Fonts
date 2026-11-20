@@ -1,0 +1,233 @@
+{
+  "schemaVersion": "1.0.0",
+  "libraryVersion": "1.0.0",
+  "metadataRevision": 1,
+  "releaseDate": "2026-11-20",
+  "minimumFontivoAppVersion": "1.0.0",
+  "packageBaseUrl": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0",
+  "metadataBaseUrl": "https://raw.githubusercontent.com/Ahmedfahmy8308/Fontivo-Fonts/v1.0.0/Metadata",
+  "summary": {
+    "totalUniqueFonts": 11207,
+    "totalFamilies": 4438,
+    "totalPackages": 15,
+    "totalCompressedSizeBytes": 641023229,
+    "totalUncompressedSizeBytes": 1385464713
+  },
+  "collections": {
+    "fontivo-essential": {
+      "id": "fontivo-essential",
+      "name": "Fontivo Unified Typography",
+      "type": "base",
+      "version": "1.0.0",
+      "fontCount": 11207,
+      "familyCount": 4438,
+      "packageCount": 15,
+      "totalCompressedSizeBytes": 641023229,
+      "totalUncompressedSizeBytes": 1385464713,
+      "packageIds": [
+        "pack-essential-001",
+        "pack-essential-002",
+        "pack-essential-003",
+        "pack-essential-004",
+        "pack-essential-005",
+        "pack-essential-006",
+        "pack-essential-007",
+        "pack-essential-008",
+        "pack-essential-009",
+        "pack-essential-010",
+        "pack-essential-011",
+        "pack-essential-012",
+        "pack-essential-013",
+        "pack-essential-014",
+        "pack-essential-015"
+      ],
+      "tags": [
+        "base",
+        "unified",
+        "production"
+      ]
+    }
+  },
+  "packages": {
+    "pack-essential-001": {
+      "id": "pack-essential-001",
+      "fileName": "fontivo-essential-001.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-001.zip",
+      "fontCount": 946,
+      "compressedSizeBytes": 37189918,
+      "uncompressedSizeBytes": 82491938,
+      "sha256": "48ee2cea04509e303d57e4f7ac703ae1b82bc59ea42c86fb546a65cb1b4b104c",
+      "format": "zip"
+    },
+    "pack-essential-002": {
+      "id": "pack-essential-002",
+      "fileName": "fontivo-essential-002.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-002.zip",
+      "fontCount": 619,
+      "compressedSizeBytes": 46916064,
+      "uncompressedSizeBytes": 87704002,
+      "sha256": "85d73c0e9ceb144ae892a09daa404b3e5e704f76f86c5efed5bfd76b6651baeb",
+      "format": "zip"
+    },
+    "pack-essential-003": {
+      "id": "pack-essential-003",
+      "fileName": "fontivo-essential-003.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-003.zip",
+      "fontCount": 1389,
+      "compressedSizeBytes": 64640683,
+      "uncompressedSizeBytes": 120625677,
+      "sha256": "b09cc864a85d44398a18e79c6664f24443642feb597f85d3fb51da420bd40f03",
+      "format": "zip"
+    },
+    "pack-essential-004": {
+      "id": "pack-essential-004",
+      "fileName": "fontivo-essential-004.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-004.zip",
+      "fontCount": 1464,
+      "compressedSizeBytes": 61327199,
+      "uncompressedSizeBytes": 114705421,
+      "sha256": "bb0eeb768a2312cee516dd2238afe5e216d9e871a3b6d5c325b14e255451440e",
+      "format": "zip"
+    },
+    "pack-essential-005": {
+      "id": "pack-essential-005",
+      "fileName": "fontivo-essential-005.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-005.zip",
+      "fontCount": 1249,
+      "compressedSizeBytes": 46380571,
+      "uncompressedSizeBytes": 88240329,
+      "sha256": "2275a68f2a3b758fee2c760560c40c3115f53e0aac71c91e1c98fc81f9be2055",
+      "format": "zip"
+    },
+    "pack-essential-006": {
+      "id": "pack-essential-006",
+      "fileName": "fontivo-essential-006.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-006.zip",
+      "fontCount": 288,
+      "compressedSizeBytes": 22766558,
+      "uncompressedSizeBytes": 46944913,
+      "sha256": "d471cd31d1f0b1132f25e3c8a11e4e8c9c1fbf84f5775850cc47d3dcec465f8d",
+      "format": "zip"
+    },
+    "pack-essential-007": {
+      "id": "pack-essential-007",
+      "fileName": "fontivo-essential-007.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-007.zip",
+      "fontCount": 325,
+      "compressedSizeBytes": 41591859,
+      "uncompressedSizeBytes": 121569531,
+      "sha256": "93f48c49fcdaeef2e25fa448bfea2497a0cfb5121805c39a365a155a1924e838",
+      "format": "zip"
+    },
+    "pack-essential-008": {
+      "id": "pack-essential-008",
+      "fileName": "fontivo-essential-008.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-008.zip",
+      "fontCount": 870,
+      "compressedSizeBytes": 47900363,
+      "uncompressedSizeBytes": 116584917,
+      "sha256": "98fc5075870cf8b74edba224d49593543dbd915f973043c77c932c297d3d1ad0",
+      "format": "zip"
+    },
+    "pack-essential-009": {
+      "id": "pack-essential-009",
+      "fileName": "fontivo-essential-009.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-009.zip",
+      "fontCount": 832,
+      "compressedSizeBytes": 48582704,
+      "uncompressedSizeBytes": 103616353,
+      "sha256": "e68009cd57ae9cecbd9a94bce5dde64eda1c614cf86aa3bac7581634f379f6c4",
+      "format": "zip"
+    },
+    "pack-essential-010": {
+      "id": "pack-essential-010",
+      "fileName": "fontivo-essential-010.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-010.zip",
+      "fontCount": 1347,
+      "compressedSizeBytes": 56601150,
+      "uncompressedSizeBytes": 121173055,
+      "sha256": "c87175fc97c2129df6e178c5beac6204ab0de666f31ab1d70bd63dffcb914535",
+      "format": "zip"
+    },
+    "pack-essential-011": {
+      "id": "pack-essential-011",
+      "fileName": "fontivo-essential-011.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-011.zip",
+      "fontCount": 548,
+      "compressedSizeBytes": 38222214,
+      "uncompressedSizeBytes": 84106819,
+      "sha256": "0498b9acc4708fd80fa8fd526ca4dd71d847c7c428a1b9e882f05adddc9e0543",
+      "format": "zip"
+    },
+    "pack-essential-012": {
+      "id": "pack-essential-012",
+      "fileName": "fontivo-essential-012.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-012.zip",
+      "fontCount": 456,
+      "compressedSizeBytes": 49436980,
+      "uncompressedSizeBytes": 120742101,
+      "sha256": "bc5bd87db9714c544b7b72ba104ee41ee55a6b91bbb0ee4d8cfa6a945ae2d0b6",
+      "format": "zip"
+    },
+    "pack-essential-013": {
+      "id": "pack-essential-013",
+      "fileName": "fontivo-essential-013.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-013.zip",
+      "fontCount": 272,
+      "compressedSizeBytes": 20852486,
+      "uncompressedSizeBytes": 46583874,
+      "sha256": "de6f0a5890c2387bbe233a0d1f847e8ab73472d0b751e925e1f49d3abe3ebcf0",
+      "format": "zip"
+    },
+    "pack-essential-014": {
+      "id": "pack-essential-014",
+      "fileName": "fontivo-essential-014.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-014.zip",
+      "fontCount": 566,
+      "compressedSizeBytes": 55034445,
+      "uncompressedSizeBytes": 120806447,
+      "sha256": "8b02fcb8d6cfa646a7877428cf4197e9630c3dcf734c8bad5b26f9ea9501ce59",
+      "format": "zip"
+    },
+    "pack-essential-015": {
+      "id": "pack-essential-015",
+      "fileName": "fontivo-essential-015.zip",
+      "collectionId": "fontivo-essential",
+      "version": "1.0.0",
+      "url": "https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/download/v1.0.0/fontivo-essential-015.zip",
+      "fontCount": 36,
+      "compressedSizeBytes": 3580035,
+      "uncompressedSizeBytes": 9569336,
+      "sha256": "ad1f5fa76a0ea222b4d4e148ec716bee918ce3492fb1010e63f6cdd3d636fff9",
+      "format": "zip"
+    }
+  }
+}

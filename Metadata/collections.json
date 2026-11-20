@@ -1,0 +1,35 @@
+{
+  "fontivo-essential": {
+    "id": "fontivo-essential",
+    "name": "Fontivo Unified Typography",
+    "type": "base",
+    "version": "1.0.0",
+    "fontCount": 11207,
+    "familyCount": 4438,
+    "packageCount": 15,
+    "totalCompressedSizeBytes": 641023229,
+    "totalUncompressedSizeBytes": 1385464713,
+    "packageIds": [
+      "pack-essential-001",
+      "pack-essential-002",
+      "pack-essential-003",
+      "pack-essential-004",
+      "pack-essential-005",
+      "pack-essential-006",
+      "pack-essential-007",
+      "pack-essential-008",
+      "pack-essential-009",
+      "pack-essential-010",
+      "pack-essential-011",
+      "pack-essential-012",
+      "pack-essential-013",
+      "pack-essential-014",
+      "pack-essential-015"
+    ],
+    "tags": [
+      "base",
+      "unified",
+      "production"
+    ]
+  }
+}

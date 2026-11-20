@@ -1,0 +1,12 @@
+# Fontivo Fonts License & Attribution
+
+Copyright (c) 2026 Ahmed Fahmy & Fontivo Contributors
+
+The repository tooling, infrastructure scripts, and manifest configurations are distributed under the MIT License. You are free to use, inspect, modify, merge, and distribute this software for any personal or commercial use.
+
+DISCLAIMER: The software is provided as-is, without warranties of any kind. The authors shall not be held liable for any damages or issues arising from its usage.
+
+---
+
+### Font Asset Licensing
+Font assets delivered by this distribution platform are created by their respective foundries and designers under permissive open licenses (primarily SIL Open Font License v1.1, Apache License 2.0, Ubuntu Font License, and CC0/Public Domain). Full per-font licensing and designer credits are tracked in Metadata/fonts.json.

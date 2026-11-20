@@ -1,0 +1,98 @@
+# ==============================================================================
+# Fontivo Fonts Engine - Git Ignore Policy
+# Prevents large binary font files, archives, and temporary artifacts from Git.
+# ==============================================================================
+
+# 1. Binary Font Formats (All casings & variants)
+*.ttf
+*.otf
+*.ttc
+*.fon
+*.woff
+*.woff2
+*.eot
+*.pfb
+*.pfm
+*.dfont
+
+# 2. Compressed Archives & Packs
+*.zip
+*.7z
+*.rar
+*.tar
+*.gz
+*.bz2
+*.xz
+Archives/
+Build/
+
+# 3. Raw Sources & Binary Data Trees
+Sources/*
+!Sources/.gitkeep
+Library/
+Build/
+
+# 4. Operating System & Filesystem Artifacts
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+*~
+
+# 5. Python & Script Execution Artifacts & Temporary Caches
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+*.cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.log
+*.tmp
+*.temp
+*.bak
+
+# 6. Obsolete Migration Dumps, Reports & Scratch Dumps
+Reports/
+**/Reports/**
+scratch/
+**/scratch/**
+evaluation_decisions.json
+GITHUB_PUBLISH_GUIDE.md
+RELEASE_NOTES.tmp.md
+*.tmp.md
+
+# 7. IDEs & Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ==============================================================================
+# Whitelisted / Explicitly Tracked Components
+# ==============================================================================
+!README.md
+!LICENSE
+!CHANGELOG.md
+!CONTRIBUTING.md
+!SECURITY.md
+!.gitignore
+!.gitattributes
+!Manifests/
+!Manifests/**
+!Metadata/
+!Metadata/**
+!Scripts/
+!Scripts/**
+!Sources/
+!Sources/.gitkeep
