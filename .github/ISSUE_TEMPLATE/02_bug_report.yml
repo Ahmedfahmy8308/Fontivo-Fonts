@@ -1,0 +1,32 @@
+name: "Bug Report"
+description: "Report a corrupted font file, broken glyphs, or incorrect metadata"
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! Please provide as much detail as possible to help us inspect and resolve it.
+  - type: input
+    id: font_family
+    attributes:
+      label: "Font Family & File Name"
+      description: "Which font family and file is affected?"
+      placeholder: "e.g., Amiri / Amiri-Bold.ttf"
+    validations:
+      required: true
+  - type: textarea
+    id: issue_description
+    attributes:
+      label: "Description of the Problem"
+      description: "What is wrong with the font? (e.g., rendering artifact, missing OpenType feature, corrupt binary, metadata typo)"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: "Operating System & Application"
+      description: "Where did you observe the problem?"
+      placeholder: "e.g., Windows 11 / Photoshop CC 2026 / Fontivo v1.0"
+    validations:
+      required: false

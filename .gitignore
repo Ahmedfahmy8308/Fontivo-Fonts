@@ -88,6 +88,8 @@ RELEASE_NOTES.tmp.md
 !SECURITY.md
 !.gitignore
 !.gitattributes
+!.github/
+!.github/**
 !Manifests/
 !Manifests/**
 !Metadata/

@@ -1,0 +1,61 @@
+name: "Font Request"
+description: "Suggest a new open-source font family to be added to Fontivo Fonts"
+title: "[Font Request]: "
+labels: ["enhancement", "font-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a new font family for the Fontivo distribution library!
+        Please ensure the font is released under an approved open-source license (SIL OFL, Apache 2.0, or CC0).
+  - type: input
+    id: font_name
+    attributes:
+      label: "Font Family Name"
+      description: "What is the official name of the font family?"
+      placeholder: "e.g., Cairo, Readex Pro, Inter"
+    validations:
+      required: true
+  - type: input
+    id: designer_foundry
+    attributes:
+      label: "Designer / Foundry"
+      description: "Who designed or published this typeface?"
+      placeholder: "e.g., Mohamed Gaber, Rasmus Andersson"
+    validations:
+      required: false
+  - type: dropdown
+    id: script_category
+    attributes:
+      label: "Script / Category"
+      description: "Which typographic script does this font primarily belong to?"
+      options:
+        - Arabic
+        - Latin
+        - Urdu
+        - Persian
+        - Hebrew
+        - Indic
+        - Symbols & Icons
+    validations:
+      required: true
+  - type: input
+    id: source_url
+    attributes:
+      label: "Official Source URL"
+      description: "Link to the upstream repository, Google Fonts page, or foundry download."
+      placeholder: "https://github.com/... or https://fonts.google.com/specimen/..."
+    validations:
+      required: true
+  - type: dropdown
+    id: license
+    attributes:
+      label: "Open Source License"
+      options:
+        - "SIL Open Font License 1.1 (OFL-1.1)"
+        - "Apache License 2.0"
+        - "Ubuntu Font License (UFL)"
+        - "Public Domain / CC0"
+        - "Other Permissive License"
+    validations:
+      required: true
