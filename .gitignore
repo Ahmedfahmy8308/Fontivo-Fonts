@@ -98,3 +98,11 @@ RELEASE_NOTES.tmp.md
 !Scripts/**
 !Sources/
 !Sources/.gitkeep
+
+# ==============================================================================
+# Always Ignore Regardless of Whitelist
+# ==============================================================================
+**/__pycache__/
+**/__pycache__/**
+*.py[cod]
+*$py.class
