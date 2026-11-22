@@ -1,0 +1,145 @@
+name: Fontivo-Fonts CI & Release Provenance
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-test:
+    name: Validate Scripts, Tests & Manifest Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fonttools
+
+      - name: Syntax-check all Python scripts
+        run: |
+          python -m py_compile Scripts/*.py Scripts/common/*.py
+
+      - name: Run pipeline unit test suite
+        run: |
+          python -m unittest discover -s Scripts -p "test_*.py" -v
+
+      - name: Run read-only release manifest check
+        run: |
+          if [ -d "Build" ] && compgen -G "Build/*.zip" > /dev/null; then
+            python Scripts/publish-release.py --check
+          else
+            python Scripts/publish-release.py --check --skip-archives
+          fi
+          git diff --exit-code Manifests/manifest.json
+
+      - name: Verify metadata JSON integrity and dynamic counts
+        run: |
+          python - << 'EOF'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path("Manifests/manifest.json").read_text("utf-8"))
+          packages = json.loads(Path("Metadata/packages.json").read_text("utf-8"))
+          collections = json.loads(Path("Metadata/collections.json").read_text("utf-8"))
+          families = json.loads(Path("Metadata/families.json").read_text("utf-8-sig"))
+          fonts = json.loads(Path("Metadata/fonts.json").read_text("utf-8-sig"))
+
+          assert len(manifest["packages"]) == len(packages), "Package count mismatch"
+          assert manifest["summary"]["totalFamilies"] == len(families), (
+              f"Family count mismatch: manifest={manifest['summary']['totalFamilies']} vs families.json={len(families)}"
+          )
+          assert manifest["summary"]["totalUniqueFonts"] == len(fonts), (
+              f"Font count mismatch: manifest={manifest['summary']['totalUniqueFonts']} vs fonts.json={len(fonts)}"
+          )
+          assert collections["fontivo-essential"]["familyCount"] == len(families), "Collection familyCount mismatch"
+          print(f"[+] Verified {len(fonts):,} fonts, {len(families):,} families, {len(packages)} packages.")
+          EOF
+
+  release-provenance:
+    name: Release Checksums & Build Provenance Attestation
+    needs: validate-and-test
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    steps:
+      - name: Checkout tagged release
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install fonttools
+
+      - name: Download existing release ZIP assets (if already attached to tag)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p Build
+          if gh release view "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" >/dev/null 2>&1; then
+            gh release download "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}" --pattern "*.zip" --dir Build --clobber || true
+          fi
+
+      - name: Verify release tag assets with publish-release.py --check
+        run: |
+          if compgen -G "Build/*.zip" > /dev/null; then
+            python Scripts/publish-release.py --check --tag "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}"
+          else
+            python Scripts/publish-release.py --check --skip-archives --tag "${GITHUB_REF_NAME}" --repo "${GITHUB_REPOSITORY}"
+          fi
+          git diff --exit-code Manifests/manifest.json
+
+      - name: Generate SHA-256 checksums
+        run: |
+          mkdir -p dist-provenance
+          {
+            sha256sum Manifests/manifest.json
+            sha256sum Metadata/collections.json Metadata/packages.json Metadata/families.json Metadata/fonts.json
+            if compgen -G "Build/*.zip" > /dev/null; then
+              sha256sum Build/*.zip
+            fi
+          } | tee dist-provenance/SHA256SUMS.txt
+
+      - name: Upload SHA-256 checksums artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-sha256sums-${{ github.ref_name }}
+          path: dist-provenance/SHA256SUMS.txt
+          retention-days: 90
+
+      - name: Attest build provenance for manifest and checksums
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: |
+            Manifests/manifest.json
+            dist-provenance/SHA256SUMS.txt
+
+      - name: Attest build provenance for release ZIP packages
+        if: hashFiles('Build/*.zip') != ''
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: Build/*.zip

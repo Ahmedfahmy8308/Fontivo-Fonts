@@ -1,10 +1,10 @@
 # Fontivo Fonts — Official Typography Distribution Hub
 
-[![Release](https://img.shields.io/badge/Release-v1.0.0-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.0)
-[![Total Fonts](https://img.shields.io/badge/Fonts-11%2C207-success.svg)](#typography-collection)
-[![Families](https://img.shields.io/badge/Families-4%2C438-informational.svg)](#typography-collection)
+[![Release](https://img.shields.io/badge/Release-v1.0.2-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.2)
+[![Total Fonts](https://img.shields.io/badge/Fonts-10%2C388-success.svg)](#typography-collection)
+[![Families](https://img.shields.io/badge/Families-4%2C076-informational.svg)](#typography-collection)
 [![Packages](https://img.shields.io/badge/Distribution%20Packages-15%20Archives-orange.svg)](#distribution-packages)
-[![Total Size](https://img.shields.io/badge/Compressed%20Size-~611%20MB-purple.svg)](#distribution-packages)
+[![Total Size](https://img.shields.io/badge/Compressed%20Size-~510%20MB-purple.svg)](#distribution-packages)
 [![License](https://img.shields.io/badge/License-OFL%20%2F%20Apache%202.0-lightgrey.svg)](#licensing)
 
 The official high-performance typography distribution and content delivery engine powering the **[Fontivo](https://github.com/Ahmedfahmy8308/Fontivo)** Creative Identity & Asset Management ecosystem — the unified desktop platform for managing brand identities, color palettes, ASE swatch exchanges, project workspaces, and live RAM typography activation.
@@ -17,13 +17,10 @@ Fontivo Fonts provides an extensively curated, validated library of **10,388 fon
 
 | Script / Category | Fonts | Description & Highlights |
 | :--- | :---: | :--- |
-| **Latin** | 6,823 | Modern display, workhorse sans-serif, classic editorial serif, slab, geometric, and decorative typefaces. |
-| **Urdu** | 1,581 | Authentic Nastaliq, Naskh, and modern calligraphic typesetting suites. |
-| **Persian (Farsi)** | 1,264 | Comprehensive Persian Nastaleeq, Shekasteh, and contemporary digital UI typography. |
-| **Arabic** | 946 | Kufi, Naskh, Thuluth, Ruq'ah, Diwani, and contemporary Arabic brand typography. |
-| **Hebrew** | 79 | Classic and modern Hebrew scripts, biblical and contemporary editorial typography. |
-| **Indic** | 47 | Devanagari, Bengali, Tamil, and modern Indic digital type suites. |
-| **Symbols & Icons** | 467 | Typography icons, dingbats, arrows, geometric ornaments, and UI glyph sets. |
+| **Latin** | 6,663 | Modern display, workhorse sans-serif, classic editorial serif, slab, geometric, and decorative typefaces. |
+| **Urdu (Arabic Script)** | 1,533 | Authentic Nastaliq, Naskh, and modern Arabic-script calligraphic typesetting suites. |
+| **Persian (Arabic Script)** | 1,249 | Comprehensive Nastaleeq, Shekasteh, and contemporary Arabic-script digital UI typography. |
+| **Arabic** | 943 | Kufi, Naskh, Thuluth, Ruq'ah, Diwani, and contemporary Arabic brand typography. |
 | **Total** | **10,388** | **4,076 Typographic Families** |
 
 ---
@@ -41,8 +38,8 @@ Fontivo employs a **decoupled, content-addressed delivery architecture**. Font b
                                Reads Manifest | (SHA-256 Verified)
                                            v
                            +--------------------------------+
-                           |  GitHub Releases (v1.0.0)      |
-                           |  15 Deterministic Archives     | (~611 MB Total)
+                           |  GitHub Releases (v1.0.2)      |
+                           |  15 Deterministic Archives     | (~510 MB Total)
                            +---------------+----------------+
                                            |
                               On-Demand    | Package Download
