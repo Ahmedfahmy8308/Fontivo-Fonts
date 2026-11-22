@@ -3,6 +3,7 @@ import json
 import time
 from pathlib import Path
 
+
 def normalize_path_string(path_str: str) -> str:
     """
     Normalizes a path to strictly POSIX forward slashes ('/'),
@@ -17,10 +18,33 @@ def normalize_path_string(path_str: str) -> str:
         s = s[2:]
     while s.startswith("/"):
         s = s[1:]
-    parts = s.split("/")
-    if ".." in parts or any(p == ".." for p in parts) or "../" in s:
+    parts = [p for p in s.split("/") if p and p != "."]
+    if ".." in parts or "../" in s:
         raise ValueError(f"Path traversal sequence detected in path: '{path_str}'")
     return "/".join(parts)
+
+
+def normalize_library_rel_path(path_str: str, with_library_prefix: bool = False) -> str:
+    """
+    Normalizes a font path into either:
+      - '<Category>/Families/<Family>/<File>' (with_library_prefix=False)
+      - 'Library/<Category>/Families/<Family>/<File>' (with_library_prefix=True)
+    Strips legacy 'Library/Essential/' and 'Essential/' prefixes cleanly.
+    """
+    norm = normalize_path_string(path_str)
+    if norm.startswith("Library/Essential/"):
+        clean = norm[len("Library/Essential/"):]
+    elif norm.startswith("Essential/"):
+        clean = norm[len("Essential/"):]
+    elif norm.startswith("Library/"):
+        clean = norm[len("Library/"):]
+    else:
+        clean = norm
+    clean = clean.lstrip("/")
+    if with_library_prefix:
+        return f"Library/{clean}" if clean else "Library"
+    return clean
+
 
 def atomic_write_json(file_path, data, indent=2, ensure_ascii=False):
     """Atomically writes JSON to target path using a temp file and os.replace()."""
@@ -31,6 +55,7 @@ def atomic_write_json(file_path, data, indent=2, ensure_ascii=False):
         json.dump(data, f, indent=indent, ensure_ascii=ensure_ascii)
     os.replace(tmp, target)
 
+
 def atomic_write_text(file_path, text, encoding="utf-8"):
     """Atomically writes text to target path using a temp file and os.replace()."""
     target = Path(file_path)
@@ -39,6 +64,7 @@ def atomic_write_text(file_path, text, encoding="utf-8"):
     with open(tmp, "w", encoding=encoding) as f:
         f.write(text)
     os.replace(tmp, target)
+
 
 class BuildStateManager:
     def __init__(self, root_dir):
@@ -76,28 +102,85 @@ class BuildStateManager:
 
     def get_font_by_sha(self, sha256):
         for f in self.data["fonts"].values():
-            if f["sha256"] == sha256:
+            if f.get("sha256") == sha256:
+                return f
+        return None
+
+    def get_fonts_by_sha(self, sha256):
+        """Returns all font records matching the given SHA-256 (supports identical files in different folders)."""
+        return [f for f in self.data["fonts"].values() if f.get("sha256") == sha256]
+
+    def get_font_by_rel_path(self, rel_path):
+        """Finds a font record by exact normalized relative path (with or without 'Library/' prefix)."""
+        if not rel_path:
+            return None
+        try:
+            target_clean = normalize_library_rel_path(rel_path, with_library_prefix=False)
+        except ValueError:
+            return None
+        for f in self.data["fonts"].values():
+            try:
+                f_clean = normalize_library_rel_path(f.get("libraryRelativePath", ""), with_library_prefix=False)
+            except ValueError:
+                continue
+            if f_clean == target_clean:
                 return f
         return None
 
     def find_font(self, identifier):
-        """Finds font record by ID, exact fileName, relative path, or path suffix."""
-        if identifier in self.data["fonts"]:
-            return self.data["fonts"][identifier]
-        clean_id = str(identifier).replace("\\", "/")
-        clean_id_name = Path(clean_id).name
-        for fid, f in self.data["fonts"].items():
-            if fid == identifier:
+        """
+        Unambiguously finds a font record using strict priority tiers:
+          1. Exact font ID match (state dict key or record['id'])
+          2. Exact normalized relative path match (with or without 'Library/' prefix)
+          3. Unambiguous exact bare fileName match ONLY when identifier contains no path
+             separator ('/' or '\\') AND matches exactly one font in state.
+
+        Never performs ambiguous substring/suffix ('endswith') matching.
+        """
+        if not identifier:
+            return None
+
+        ident_str = str(identifier).strip()
+        if not ident_str:
+            return None
+
+        # Tier 1: Exact font ID match
+        if ident_str in self.data["fonts"]:
+            return self.data["fonts"][ident_str]
+        for f in self.data["fonts"].values():
+            if f.get("id") == ident_str:
                 return f
-            if f.get("fileName") == identifier or f.get("fileName") == clean_id_name:
+
+        # Tier 2: Exact normalized relative path match
+        try:
+            norm_ident = normalize_path_string(ident_str)
+            clean_ident = normalize_library_rel_path(ident_str, with_library_prefix=False)
+        except ValueError:
+            return None
+
+        for f in self.data["fonts"].values():
+            raw_rel = f.get("libraryRelativePath", "")
+            if not raw_rel:
+                continue
+            try:
+                f_norm = normalize_path_string(raw_rel)
+                f_clean = normalize_library_rel_path(raw_rel, with_library_prefix=False)
+            except ValueError:
+                continue
+            if f_norm == norm_ident or f_clean == clean_ident:
                 return f
-            rel = f.get("libraryRelativePath", "").replace("\\", "/")
-            if rel == clean_id or rel.endswith(clean_id) or clean_id.endswith(rel):
-                return f
-            if rel.startswith("Library/"):
-                sub = rel[len("Library/"):]
-                if sub == clean_id or sub.endswith(clean_id):
-                    return f
+
+        # Tier 3: Unambiguous bare fileName fallback (only if no directory separators were provided)
+        if "/" not in norm_ident:
+            matches = [
+                f for f in self.data["fonts"].values()
+                if f.get("fileName") == norm_ident
+            ]
+            if len(matches) == 1:
+                return matches[0]
+            # If len(matches) > 1, it is ambiguous — refuse to guess!
+            return None
+
         return None
 
     def get_package(self, package_id):
@@ -105,11 +188,7 @@ class BuildStateManager:
 
     def record_tombstone(self, font_id, metadata, reason="REMOVED"):
         raw_rel = metadata.get("libraryRelativePath") or metadata.get("fileName")
-        rel = normalize_path_string(raw_rel)
-        if rel.startswith("Library/Essential/"):
-            rel = "Library/" + rel[len("Library/Essential/"):]
-        elif not rel.startswith("Library/"):
-            rel = f"Library/{rel.lstrip('/')}"
+        rel = normalize_library_rel_path(raw_rel, with_library_prefix=True)
 
         raw_fname = metadata.get("fileName") or Path(rel).name
         file_name = normalize_path_string(raw_fname)

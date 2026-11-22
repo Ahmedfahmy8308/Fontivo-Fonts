@@ -13,7 +13,7 @@ The official high-performance typography distribution and content delivery engin
 
 ## Typography Collection
 
-Fontivo Fonts provides an extensively curated, validated library of **11,207 font files** grouped into **4,438 typographic families**, optimized for graphic designers, UI/UX engineers, and desktop publishing workflows:
+Fontivo Fonts provides an extensively curated, validated library of **10,388 font files** grouped into **4,076 typographic families**, optimized for graphic designers, UI/UX engineers, and desktop publishing workflows:
 
 | Script / Category | Fonts | Description & Highlights |
 | :--- | :---: | :--- |
@@ -24,7 +24,7 @@ Fontivo Fonts provides an extensively curated, validated library of **11,207 fon
 | **Hebrew** | 79 | Classic and modern Hebrew scripts, biblical and contemporary editorial typography. |
 | **Indic** | 47 | Devanagari, Bengali, Tamil, and modern Indic digital type suites. |
 | **Symbols & Icons** | 467 | Typography icons, dingbats, arrows, geometric ornaments, and UI glyph sets. |
-| **Total** | **11,207** | **4,438 Typographic Families** |
+| **Total** | **10,388** | **4,076 Typographic Families** |
 
 ---
 
@@ -66,21 +66,22 @@ The collection is partitioned into 15 independent distribution packages (`~611 M
 
 | Package Archive | Fonts | Category Focus |
 | :--- | :---: | :--- |
-| `fontivo-essential-001.zip` | 946 | Arabic Typography (Classic, Modern, Kufi, Naskh) |
-| `fontivo-essential-002.zip` | 619 | Latin Workhorses (Sans & Body Text) |
-| `fontivo-essential-003.zip` | 1,389 | Latin Typography (Comprehensive Display & Sans) |
-| `fontivo-essential-004.zip` | 1,481 | Latin Typography (Contemporary & Editorial) |
-| `fontivo-essential-005.zip` | 895 | Latin Display & Geometric |
-| `fontivo-essential-006.zip` | 445 | Latin Classic & Modern Serif |
-| `fontivo-essential-007.zip` | 848 | Latin Modern & Editorial |
-| `fontivo-essential-008.zip` | 1,027 | Latin Extended & Headline |
-| `fontivo-essential-009.zip` | 884 | Latin Decorative, Script & Brush |
-| `fontivo-essential-010.zip` | 868 | Urdu Nastaliq & Latin Typography |
-| `fontivo-essential-011.zip` | 713 | Urdu & Persian Typographic Suites |
-| `fontivo-essential-012.zip` | 511 | Persian, Indic & Hebrew Typography |
+| `fontivo-essential-001.zip` | 943 | Arabic Typography (Classic, Modern, Kufi, Naskh) |
+| `fontivo-essential-002.zip` | 487 | Latin Workhorses (Sans & Body Text) |
+| `fontivo-essential-003.zip` | 1,334 | Latin Typography (Comprehensive Display & Sans) |
+| `fontivo-essential-004.zip` | 1,438 | Latin Typography (Contemporary & Editorial) |
+| `fontivo-essential-005.zip` | 1,241 | Latin Display & Geometric |
+| `fontivo-essential-006.zip` | 288 | Latin Classic & Modern Serif |
+| `fontivo-essential-007.zip` | 325 | Latin Modern & Editorial |
+| `fontivo-essential-008.zip` | 835 | Latin Extended & Headline |
+| `fontivo-essential-009.zip` | 802 | Latin Decorative, Script & Brush |
+| `fontivo-essential-010.zip` | 1,162 | Urdu Nastaliq & Latin Typography |
+| `fontivo-essential-011.zip` | 251 | Urdu & Persian Typographic Suites |
+| `fontivo-essential-012.zip` | 436 | Persian, Indic & Hebrew Typography |
 | `fontivo-essential-013.zip` | 272 | Multilingual Suites & Global Typography |
-| `fontivo-essential-014.zip` | 566 | Artistic & Specialized Display Typography |
+| `fontivo-essential-014.zip` | 538 | Artistic & Specialized Display Typography |
 | `fontivo-essential-015.zip` | 36 | Symbols, Icons, Dingbats & Ornaments |
+| **Total** | **10,388** | **Curated Production Typography Collection (510.0 MB)** |
 
 All packages are available under [GitHub Releases](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.0).
 
@@ -138,7 +139,7 @@ python Scripts/update.py remove "FontName.ttf"
 ```
 
 ### Verifying Library Integrity
-Verifies that all 11,207 fonts in `Library/` and all 15 package archives in `Build/` physically match recorded SHA-256 states:
+Verifies that all 10,388 fonts in `Library/` and all 15 package archives in `Build/` physically match recorded SHA-256 states:
 ```bash
 python Scripts/scan.py
 ```

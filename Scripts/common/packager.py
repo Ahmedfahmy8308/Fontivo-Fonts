@@ -50,7 +50,14 @@ def build_package_archive(output_zip_path, files_to_pack, deterministic_date=(20
             zinfo = zipfile.ZipInfo(filename=arcname)
             zinfo.date_time = deterministic_date
             zinfo.compress_type = zipfile.ZIP_DEFLATED
-            zf.writestr(zinfo, data)
+            zinfo.create_system = 0
+            zinfo.create_version = 20
+            zinfo.extract_version = 20
+            zinfo.internal_attr = 0
+            zinfo.external_attr = 0o644 << 16
+            zinfo.extra = b""
+            zinfo.comment = b""
+            zf.writestr(zinfo, data, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
     # Test integrity before replacing
     with zipfile.ZipFile(temp_zip_path, "r") as zf:

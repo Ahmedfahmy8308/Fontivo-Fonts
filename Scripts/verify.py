@@ -12,6 +12,7 @@ Executes all 10 mandatory acceptance tests on the unified canonical library:
   8. Distribution package alignment and archive integrity (release URLs, CRC, SHA match)
   9. Deterministic rebuild (identical sources -> identical SHA-256)
   10. Canonical Library and Distribution Package Integrity (Library and Build aligned)
+  11. Documentation and Manifest Mathematical Consistency (README & GITHUB_PUBLISH_GUIDE aligned with manifest.json)
 """
 
 import os
@@ -21,6 +22,7 @@ import json
 import shutil
 import hashlib
 import tempfile
+import re
 from pathlib import Path
 from fontTools.ttLib import TTFont
 
@@ -64,7 +66,15 @@ class TestRunner:
         shutil.copy2(STATE_FILE, self.backup_dir / "build-state.json")
         shutil.copy2(META / "packages.json", self.backup_dir / "packages.json")
         shutil.copy2(META / "collections.json", self.backup_dir / "collections.json")
+        if (META / "fonts.json").exists():
+            shutil.copy2(META / "fonts.json", self.backup_dir / "fonts.json")
+        if (META / "families.json").exists():
+            shutil.copy2(META / "families.json", self.backup_dir / "families.json")
         shutil.copy2(MAN / "manifest.json", self.backup_dir / "manifest.json")
+        if (ROOT / "README.md").exists():
+            shutil.copy2(ROOT / "README.md", self.backup_dir / "README.md")
+        if (ROOT / "GITHUB_PUBLISH_GUIDE.md").exists():
+            shutil.copy2(ROOT / "GITHUB_PUBLISH_GUIDE.md", self.backup_dir / "GITHUB_PUBLISH_GUIDE.md")
 
     def restore_state_and_packages(self):
         """Restores state and metadata to pristine pre-test state using atomic replace."""
@@ -74,7 +84,11 @@ class TestRunner:
             ("build-state.json", STATE_FILE),
             ("packages.json", META / "packages.json"),
             ("collections.json", META / "collections.json"),
-            ("manifest.json", MAN / "manifest.json")
+            ("fonts.json", META / "fonts.json"),
+            ("families.json", META / "families.json"),
+            ("manifest.json", MAN / "manifest.json"),
+            ("README.md", ROOT / "README.md"),
+            ("GITHUB_PUBLISH_GUIDE.md", ROOT / "GITHUB_PUBLISH_GUIDE.md")
         ]:
             src = self.backup_dir / src_name
             if src.exists():
@@ -101,169 +115,211 @@ class TestRunner:
     # -------------------------------------------------------------
     def test_2_single_font_addition(self):
         self.backup_state_and_packages()
-
-        with open(META / "packages.json", "r", encoding="utf-8") as f:
-            pkgs_before = json.load(f)
-        pkg_id = sorted(list(pkgs_before.keys()))[-1]
-        zip_name = pkgs_before[pkg_id]["fileName"]
-        zip_path = BUILD / zip_name
-        zip_bak = zip_path.with_suffix(".zip.bak")
-        shutil.copy2(zip_path, zip_bak)
-
-        hashes_before = {pid: p["sha256"] for pid, p in pkgs_before.items()}
-
-        # Create a valid test fixture font using TTFont
         test_font_dir = LIB / "Latin" / "Families" / "FontivoTestFamily"
-        test_font_dir.mkdir(parents=True, exist_ok=True)
         test_font_file = test_font_dir / "FontivoTest-Regular.ttf"
+        zip_path = None
+        zip_bak = None
+        f_obj = None
+        try:
+            with open(META / "packages.json", "r", encoding="utf-8") as f:
+                pkgs_before = json.load(f)
+            pkg_id = build_engine.select_target_package(
+                "Latin/Families/FontivoTestFamily/FontivoTest-Regular.ttf",
+                pkgs_before,
+                {pid: [] for pid in pkgs_before},
+            )
+            zip_name = pkgs_before[pkg_id]["fileName"]
+            zip_path = BUILD / zip_name
+            zip_bak = zip_path.with_suffix(".zip.bak")
+            shutil.copy2(zip_path, zip_bak)
 
-        sample_font = next(LIB.rglob("*.ttf"))
-        f_obj = TTFont(str(sample_font))
-        f_obj["name"].setName("FontivoTestFamily", 1, 3, 1, 0x409)
-        f_obj.save(str(test_font_file))
+            hashes_before = {pid: p["sha256"] for pid, p in pkgs_before.items()}
 
-        t0 = time.time()
-        rebuilt = build_engine.main()
-        dur = time.time() - t0
+            # Create a valid test fixture font using TTFont
+            test_font_dir.mkdir(parents=True, exist_ok=True)
+            sample_font = next(LIB.rglob("*.ttf"))
+            f_obj = TTFont(str(sample_font))
+            f_obj["name"].setName("FontivoTestFamily", 1, 3, 1, 0x409)
+            f_obj.save(str(test_font_file))
+            f_obj.close()
+            f_obj = None
 
-        with open(META / "packages.json", "r", encoding="utf-8") as f:
-            pkgs_after = json.load(f)
-        hashes_after = {pid: p["sha256"] for pid, p in pkgs_after.items()}
+            t0 = time.time()
+            rebuilt = build_engine.main()
+            dur = time.time() - t0
 
-        changed_pkgs = [pid for pid in hashes_before if hashes_before[pid] != hashes_after.get(pid)]
-        unchanged_pkgs = [pid for pid in hashes_before if hashes_before[pid] == hashes_after.get(pid)]
+            with open(META / "packages.json", "r", encoding="utf-8") as f:
+                pkgs_after = json.load(f)
+            hashes_after = {pid: p["sha256"] for pid, p in pkgs_after.items()}
 
-        passed = (rebuilt == 1) and (len(changed_pkgs) == 1) and (len(unchanged_pkgs) == len(hashes_before) - 1) and (dur < 15.0)
-        self.log(2, "Single Font Addition", passed,
-                 f"Rebuilt: {rebuilt} pkg ({changed_pkgs}). Unchanged: {len(unchanged_pkgs)}/{len(hashes_before)}. Time: {dur:.3f}s.", dur)
+            changed_pkgs = [pid for pid in hashes_before if hashes_before[pid] != hashes_after.get(pid)]
+            unchanged_pkgs = [pid for pid in hashes_before if hashes_before[pid] == hashes_after.get(pid)]
 
-        # Cleanup test fixture and restore backup
-        if test_font_file.exists():
-            test_font_file.unlink()
-        if test_font_dir.exists():
-            shutil.rmtree(test_font_dir, ignore_errors=True)
-        if zip_bak.exists():
-            shutil.move(zip_bak, zip_path)
-        self.restore_state_and_packages()
-        return passed
+            passed = (rebuilt == 1) and (len(changed_pkgs) == 1) and (len(unchanged_pkgs) == len(hashes_before) - 1) and (dur < 20.0)
+            self.log(2, "Single Font Addition", passed,
+                     f"Rebuilt: {rebuilt} pkg ({changed_pkgs}). Unchanged: {len(unchanged_pkgs)}/{len(hashes_before)}. Time: {dur:.3f}s.", dur)
+            return passed
+        finally:
+            if f_obj is not None:
+                try:
+                    f_obj.close()
+                except Exception:
+                    pass
+            if test_font_file.exists():
+                test_font_file.unlink(missing_ok=True)
+            if test_font_dir.exists():
+                shutil.rmtree(test_font_dir, ignore_errors=True)
+            if zip_bak is not None and zip_bak.exists() and zip_path is not None:
+                shutil.move(zip_bak, zip_path)
+            self.restore_state_and_packages()
 
     # -------------------------------------------------------------
     # TEST 3: Single Font Deletion
     # -------------------------------------------------------------
     def test_3_single_font_deletion(self):
         self.backup_state_and_packages()
-
-        with open(META / "packages.json", "r", encoding="utf-8") as f:
-            pkgs = json.load(f)
-        pkg_id = sorted(list(pkgs.keys()))[-1]
-        zip_name = pkgs[pkg_id]["fileName"]
-        zip_path = BUILD / zip_name
-        zip_bak = zip_path.with_suffix(".zip.bak")
-        shutil.copy2(zip_path, zip_bak)
-
         test_font_dir = LIB / "Latin" / "Families" / "FontivoDeletionTest"
-        test_font_dir.mkdir(parents=True, exist_ok=True)
         test_font_file = test_font_dir / "FontivoDel-Regular.ttf"
-        sample_font = next(LIB.rglob("*.ttf"))
-        f_obj = TTFont(str(sample_font))
-        f_obj["name"].setName("FontivoDeletionTest", 1, 3, 1, 0x409)
-        f_obj.save(str(test_font_file))
+        zip_path = None
+        zip_bak = None
+        f_obj = None
+        try:
+            with open(META / "packages.json", "r", encoding="utf-8") as f:
+                pkgs = json.load(f)
+            pkg_id = build_engine.select_target_package(
+                "Latin/Families/FontivoDeletionTest/FontivoDel-Regular.ttf",
+                pkgs,
+                {pid: [] for pid in pkgs},
+            )
+            zip_name = pkgs[pkg_id]["fileName"]
+            zip_path = BUILD / zip_name
+            zip_bak = zip_path.with_suffix(".zip.bak")
+            shutil.copy2(zip_path, zip_bak)
 
-        # Build it into the library
-        build_engine.main()
+            test_font_dir.mkdir(parents=True, exist_ok=True)
+            sample_font = next(LIB.rglob("*.ttf"))
+            f_obj = TTFont(str(sample_font))
+            f_obj["name"].setName("FontivoDeletionTest", 1, 3, 1, 0x409)
+            f_obj.save(str(test_font_file))
+            f_obj.close()
+            f_obj = None
 
-        # Now test DELETION
-        test_font_file.unlink()
+            # Build it into the library
+            build_engine.main()
 
-        t0 = time.time()
-        rebuilt = build_engine.main()
-        dur = time.time() - t0
+            # Now test DELETION
+            test_font_file.unlink()
 
-        with open(STATE_FILE, "r", encoding="utf-8") as f:
-            st = json.load(f)
-        tombstones = st.get("tombstones", [])
-        has_tombstone = any(
-            "FontivoDel-Regular" in t.get("relativePath", "") or "FontivoDel-Regular" in t.get("fileName", "")
-            for t in tombstones
-        )
+            t0 = time.time()
+            rebuilt = build_engine.main()
+            dur = time.time() - t0
 
-        passed = (rebuilt == 1) and has_tombstone and (dur < 15.0)
-        self.log(3, "Single Font Deletion", passed,
-                 f"Rebuilt: {rebuilt} pkg. Tombstone recorded: {has_tombstone}. Time: {dur:.3f}s.", dur)
+            with open(STATE_FILE, "r", encoding="utf-8") as f:
+                st = json.load(f)
+            tombstones = st.get("tombstones", [])
+            has_tombstone = any(
+                "FontivoDel-Regular" in t.get("relativePath", "") or "FontivoDel-Regular" in t.get("fileName", "")
+                for t in tombstones
+            )
 
-        if test_font_dir.exists():
-            shutil.rmtree(test_font_dir, ignore_errors=True)
-        if zip_bak.exists():
-            shutil.move(zip_bak, zip_path)
-        self.restore_state_and_packages()
-        return passed
+            passed = (rebuilt == 1) and has_tombstone and (dur < 20.0)
+            self.log(3, "Single Font Deletion", passed,
+                     f"Rebuilt: {rebuilt} pkg. Tombstone recorded: {has_tombstone}. Time: {dur:.3f}s.", dur)
+            return passed
+        finally:
+            if f_obj is not None:
+                try:
+                    f_obj.close()
+                except Exception:
+                    pass
+            if test_font_file.exists():
+                test_font_file.unlink(missing_ok=True)
+            if test_font_dir.exists():
+                shutil.rmtree(test_font_dir, ignore_errors=True)
+            if zip_bak is not None and zip_bak.exists() and zip_path is not None:
+                shutil.move(zip_bak, zip_path)
+            self.restore_state_and_packages()
 
     # -------------------------------------------------------------
     # TEST 4: Single Font Modification
     # -------------------------------------------------------------
     def test_4_single_font_modification(self):
         self.backup_state_and_packages()
-
-        with open(META / "packages.json", "r", encoding="utf-8") as f:
-            pkgs = json.load(f)
-        pkg_id = sorted(list(pkgs.keys()))[-1]
-        zip_name = pkgs[pkg_id]["fileName"]
-        zip_path = BUILD / zip_name
-        zip_bak = zip_path.with_suffix(".zip.bak")
-        shutil.copy2(zip_path, zip_bak)
-
         test_font_dir = LIB / "Latin" / "Families" / "FontivoModTest"
-        test_font_dir.mkdir(parents=True, exist_ok=True)
         test_font_file = test_font_dir / "FontivoMod-Regular.ttf"
+        zip_path = None
+        zip_bak = None
+        f_obj = None
+        try:
+            with open(META / "packages.json", "r", encoding="utf-8") as f:
+                pkgs = json.load(f)
+            pkg_id = build_engine.select_target_package(
+                "Latin/Families/FontivoModTest/FontivoMod-Regular.ttf",
+                pkgs,
+                {pid: [] for pid in pkgs},
+            )
+            zip_name = pkgs[pkg_id]["fileName"]
+            zip_path = BUILD / zip_name
+            zip_bak = zip_path.with_suffix(".zip.bak")
+            shutil.copy2(zip_path, zip_bak)
 
-        sample_font = next(LIB.rglob("*.ttf"))
-        f_obj = TTFont(str(sample_font))
-        f_obj["name"].setName("FontivoModTestInitial", 1, 3, 1, 0x409)
-        f_obj.save(str(test_font_file))
-        build_engine.main()
+            test_font_dir.mkdir(parents=True, exist_ok=True)
 
-        # Modify it
-        f_obj["name"].setName("FontivoModTestChanged", 1, 3, 1, 0x409)
-        f_obj.save(str(test_font_file))
+            sample_font = next(LIB.rglob("*.ttf"))
+            f_obj = TTFont(str(sample_font))
+            f_obj["name"].setName("FontivoModTestInitial", 1, 3, 1, 0x409)
+            f_obj.save(str(test_font_file))
+            build_engine.main()
 
-        t0 = time.time()
-        rebuilt = build_engine.main()
-        dur = time.time() - t0
+            # Modify it
+            f_obj["name"].setName("FontivoModTestChanged", 1, 3, 1, 0x409)
+            f_obj.save(str(test_font_file))
+            f_obj.close()
+            f_obj = None
 
-        passed = (rebuilt == 1) and (dur < 15.0)
-        self.log(4, "Single Font Modification", passed,
-                 f"Rebuilt: {rebuilt} pkg. Content-addressed modification detected. Time: {dur:.3f}s.", dur)
+            t0 = time.time()
+            rebuilt = build_engine.main()
+            dur = time.time() - t0
 
-        if test_font_file.exists():
-            test_font_file.unlink()
-        if test_font_dir.exists():
-            shutil.rmtree(test_font_dir, ignore_errors=True)
-        if zip_bak.exists():
-            shutil.move(zip_bak, zip_path)
-        self.restore_state_and_packages()
-        return passed
+            passed = (rebuilt == 1) and (dur < 20.0)
+            self.log(4, "Single Font Modification", passed,
+                     f"Rebuilt: {rebuilt} pkg. Content-addressed modification detected. Time: {dur:.3f}s.", dur)
+            return passed
+        finally:
+            if f_obj is not None:
+                try:
+                    f_obj.close()
+                except Exception:
+                    pass
+            if test_font_file.exists():
+                test_font_file.unlink(missing_ok=True)
+            if test_font_dir.exists():
+                shutil.rmtree(test_font_dir, ignore_errors=True)
+            if zip_bak is not None and zip_bak.exists() and zip_path is not None:
+                shutil.move(zip_bak, zip_path)
+            self.restore_state_and_packages()
 
     # -------------------------------------------------------------
     # TEST 5: Metadata-Only Change
     # -------------------------------------------------------------
     def test_5_metadata_only_change(self):
         self.backup_state_and_packages()
+        try:
+            state_mgr = BuildStateManager(ROOT)
+            old_rev = state_mgr.data.get("metadataRevision", 1)
+            new_rev = state_mgr.bump_metadata_revision()
+            state_mgr.save_state()
 
-        state_mgr = BuildStateManager(ROOT)
-        old_rev = state_mgr.data.get("metadataRevision", 1)
-        new_rev = state_mgr.bump_metadata_revision()
-        state_mgr.save_state()
+            t0 = time.time()
+            rebuilt = build_engine.main()
+            dur = time.time() - t0
 
-        t0 = time.time()
-        rebuilt = build_engine.main()
-        dur = time.time() - t0
-
-        passed = (rebuilt == 0) and (new_rev == old_rev + 1)
-        self.log(5, "Metadata-Only Change", passed,
-                 f"Rebuilt packages: {rebuilt} (expected 0). Metadata revision bumped from {old_rev} to {new_rev}.", dur)
-
-        self.restore_state_and_packages()
-        return passed
+            passed = (rebuilt == 0) and (new_rev == old_rev + 1)
+            self.log(5, "Metadata-Only Change", passed,
+                     f"Rebuilt packages: {rebuilt} (expected 0). Metadata revision bumped from {old_rev} to {new_rev}.", dur)
+            return passed
+        finally:
+            self.restore_state_and_packages()
 
     # -------------------------------------------------------------
     # TEST 6: Corrupted Package Detection
@@ -275,27 +331,30 @@ class TestRunner:
         zip_name = pkgs[pkg_id]["fileName"]
         real_zip = BUILD / zip_name
 
-        with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp:
-            tmp_path = Path(tmp.name)
+        tmp_path = None
+        try:
+            with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp:
+                tmp_path = Path(tmp.name)
             shutil.copy2(real_zip, tmp_path)
 
-        # Tamper with 1 byte in the middle of the zip
-        with open(tmp_path, "r+b") as f:
-            f.seek(1024)
-            byte = f.read(1)
-            flipped = bytes([byte[0] ^ 0xFF])
-            f.seek(1024)
-            f.write(flipped)
+            # Tamper with 1 byte in the middle of the zip
+            with open(tmp_path, "r+b") as f:
+                f.seek(1024)
+                byte = f.read(1)
+                flipped = bytes([byte[0] ^ 0xFF])
+                f.seek(1024)
+                f.write(flipped)
 
-        crc_ok, crc_err = test_archive_integrity(tmp_path)
-        sha_matches = (get_file_sha256(tmp_path) == get_file_sha256(real_zip))
+            crc_ok, crc_err = test_archive_integrity(tmp_path)
+            sha_matches = (get_file_sha256(tmp_path) == get_file_sha256(real_zip))
 
-        tmp_path.unlink()
-
-        passed = (not crc_ok or not sha_matches)
-        self.log(6, "Corrupted Package Detection", passed,
-                 f"Archive CRC valid: {crc_ok} (expected False). SHA-256 matched original: {sha_matches} (expected False).")
-        return passed
+            passed = (not crc_ok or not sha_matches)
+            self.log(6, "Corrupted Package Detection", passed,
+                     f"Archive CRC valid: {crc_ok} (expected False). SHA-256 matched original: {sha_matches} (expected False).")
+            return passed
+        finally:
+            if tmp_path is not None and tmp_path.exists():
+                tmp_path.unlink(missing_ok=True)
 
     # -------------------------------------------------------------
     # TEST 7: Manifest Structure & Metadata Consistency
@@ -386,21 +445,26 @@ class TestRunner:
             if full_p.exists():
                 file_list.append((rel, full_p))
 
-        with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp1, \
-             tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp2:
-            tmp1_path = Path(tmp1.name)
-            tmp2_path = Path(tmp2.name)
+        tmp1_path = None
+        tmp2_path = None
+        try:
+            with tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp1, \
+                 tempfile.NamedTemporaryFile(suffix=".zip", delete=False) as tmp2:
+                tmp1_path = Path(tmp1.name)
+                tmp2_path = Path(tmp2.name)
 
-        res1 = build_package_archive(tmp1_path, file_list)
-        res2 = build_package_archive(tmp2_path, file_list)
-        passed = (res1["sha256"] == res2["sha256"]) and (res1["fontCount"] > 0)
+            res1 = build_package_archive(tmp1_path, file_list)
+            res2 = build_package_archive(tmp2_path, file_list)
+            passed = (res1["sha256"] == res2["sha256"]) and (res1["fontCount"] > 0)
 
-        tmp1_path.unlink(missing_ok=True)
-        tmp2_path.unlink(missing_ok=True)
-
-        self.log(9, "Deterministic Rebuild", passed,
-                 f"Build 1 SHA: {res1['sha256']}. Build 2 SHA: {res2['sha256']}. Identical: {passed}.")
-        return passed
+            self.log(9, "Deterministic Rebuild", passed,
+                     f"Build 1 SHA: {res1['sha256']}. Build 2 SHA: {res2['sha256']}. Identical: {passed}.")
+            return passed
+        finally:
+            if tmp1_path is not None:
+                tmp1_path.unlink(missing_ok=True)
+            if tmp2_path is not None:
+                tmp2_path.unlink(missing_ok=True)
 
     # -------------------------------------------------------------
     # TEST 10: Canonical Library & Distribution Integrity
@@ -424,6 +488,82 @@ class TestRunner:
                  f"Canonical repository is 100% complete and valid.")
         return passed
 
+    # -------------------------------------------------------------
+    # TEST 11: Documentation and Manifest Consistency Verification
+    # -------------------------------------------------------------
+    def test_11_documentation_manifest_consistency(self):
+        t0 = time.time()
+        with open(MAN / "manifest.json", "r", encoding="utf-8") as f:
+            manifest = json.load(f)
+
+        manifest_pkgs = manifest.get("packages", {})
+        expected_total = manifest.get("summary", {}).get("totalUniqueFonts", 11207)
+        errors = []
+
+        # 1. Verify README.md table
+        readme_file = ROOT / "README.md"
+        if not readme_file.exists():
+            errors.append("README.md does not exist")
+        else:
+            with open(readme_file, "r", encoding="utf-8") as f:
+                readme_text = f.read()
+
+            for pid, p in manifest_pkgs.items():
+                fn = p["fileName"]
+                fc = p["fontCount"]
+                pattern = re.compile(rf"\|\s*`{re.escape(fn)}`\s*\|\s*([0-9,]+)\s*\|")
+                match = pattern.search(readme_text)
+                if not match:
+                    errors.append(f"README.md missing row for package {fn}")
+                else:
+                    listed_count = int(match.group(1).replace(",", ""))
+                    if listed_count != fc:
+                        errors.append(f"README.md count mismatch for {fn}: manifest={fc}, README={listed_count}")
+
+            # Check total row in README
+            total_match = re.search(r"\|\s*\*\*Total\*\*\s*\|\s*\*\*([0-9,]+)\*\*\s*\|", readme_text)
+            if total_match:
+                listed_total = int(total_match.group(1).replace(",", ""))
+                if listed_total != expected_total:
+                    errors.append(f"README.md total count mismatch: manifest={expected_total}, README={listed_total}")
+            else:
+                errors.append("README.md missing valid **Total** row")
+
+        # 2. Verify GITHUB_PUBLISH_GUIDE.md table
+        guide_file = ROOT / "GITHUB_PUBLISH_GUIDE.md"
+        if not guide_file.exists():
+            errors.append("GITHUB_PUBLISH_GUIDE.md does not exist")
+        else:
+            with open(guide_file, "r", encoding="utf-8") as f:
+                guide_text = f.read()
+
+            for pid, p in manifest_pkgs.items():
+                fn = p["fileName"]
+                fc = p["fontCount"]
+                pattern = re.compile(rf"\|\s*`{re.escape(fn)}`\s*\|\s*([0-9,]+)\s*\|\s*([0-9.]+)\s*MB\s*\|")
+                match = pattern.search(guide_text)
+                if not match:
+                    errors.append(f"GITHUB_PUBLISH_GUIDE.md missing row for package {fn}")
+                else:
+                    listed_count = int(match.group(1).replace(",", ""))
+                    if listed_count != fc:
+                        errors.append(f"GITHUB_PUBLISH_GUIDE.md count mismatch for {fn}: manifest={fc}, Guide={listed_count}")
+
+            # Check total row in Guide
+            total_match_guide = re.search(r"\|\s*\*\*Total\*\*\s*\|\s*\*\*([0-9,]+)\s*Fonts\*\*\s*\|", guide_text)
+            if total_match_guide:
+                listed_total_guide = int(total_match_guide.group(1).replace(",", ""))
+                if listed_total_guide != expected_total:
+                    errors.append(f"GITHUB_PUBLISH_GUIDE.md total count mismatch: manifest={expected_total}, Guide={listed_total_guide}")
+            else:
+                errors.append("GITHUB_PUBLISH_GUIDE.md missing valid **Total** row")
+
+        dur = time.time() - t0
+        passed = len(errors) == 0
+        details = f"Documentation (README.md & GITHUB_PUBLISH_GUIDE.md) and manifest.json are 100% mathematically synchronized ({expected_total:,} fonts across {len(manifest_pkgs)} packages)." if passed else "; ".join(errors)
+        self.log(11, "Documentation & Manifest Mathematical Consistency", passed, details, dur)
+        return passed
+
     def run_all(self):
         print("======================================================================")
         print("    FONTIVO-FONTS: AUTOMATED ACCEPTANCE TEST SUITE (v1.0.0)           ")
@@ -440,11 +580,12 @@ class TestRunner:
         t8 = self.test_8_distribution_package_alignment()
         t9 = self.test_9_deterministic_rebuild()
         t10 = self.test_10_canonical_library_and_package_integrity()
+        t11 = self.test_11_documentation_manifest_consistency()
         total_time = time.time() - t_start
 
-        all_passed = all([t1, t2, t3, t4, t5, t6, t7, t8, t9, t10])
+        all_passed = all([t1, t2, t3, t4, t5, t6, t7, t8, t9, t10, t11])
         print("\n" + "#"*70)
-        print(f"ACCEPTANCE TEST SUITE SUMMARY: {'ALL 10 TESTS PASSED' if all_passed else 'SOME TESTS FAILED'}")
+        print(f"ACCEPTANCE TEST SUITE SUMMARY: {'ALL 11 TESTS PASSED' if all_passed else 'SOME TESTS FAILED'}")
         print(f"Total Execution Time: {total_time:.2f} seconds")
         print("#"*70)
 

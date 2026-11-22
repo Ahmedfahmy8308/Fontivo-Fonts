@@ -25,7 +25,8 @@ if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
 from common.hasher import get_file_sha256
-from common.validator import validate_font_file
+from common.mojibake import repair_mojibake
+from common.validator import validate_font_file, extract_font_metadata
 from common.state import BuildStateManager, atomic_write_json, normalize_path_string
 import build as build_engine
 
@@ -52,26 +53,11 @@ def assert_inside_library(path_obj: Path, lib_root: Path = LIB) -> Path:
     return resolved_target
 
 def parse_font_family(font_path):
-    """Parses font family name from font binary metadata tables using fontTools."""
+    """Parses font family name from single font or TTC/OTC binary metadata tables, repairing Mojibake."""
     try:
-        from fontTools.ttLib import TTFont
-        font = TTFont(str(font_path))
-        family_name = None
-        # Try Typographic Family Name (nameID 16), then Font Family Name (nameID 1)
-        for target_id in (16, 1):
-            for record in font["name"].names:
-                if record.nameID == target_id:
-                    try:
-                        name_str = record.toUnicode()
-                        if name_str and name_str.strip():
-                            family_name = name_str.strip()
-                            break
-                    except Exception:
-                        pass
-            if family_name:
-                break
+        meta = extract_font_metadata(font_path)
+        family_name = repair_mojibake(meta.get("familyName") or "")
         if family_name:
-            # Sanitize directory name
             sanitized = "".join(c for c in family_name if c not in '<>:"/\\|?*').strip()
             return sanitized if sanitized else font_path.stem
     except Exception:
@@ -258,9 +244,120 @@ def handle_modify(args):
     print(f"[+] Modification complete. Rebuilt {rebuilt} package(s) in ~1s.")
     return 0
 
+# Allowed mutable metadata attributes and their expected types/coercers
+ALLOWED_METADATA_KEYS = {
+    "familyName": "str",
+    "subfamilyName": "str",
+    "fullName": "str",
+    "postScriptName": "str",
+    "version": "str",
+    "designer": "str",
+    "manufacturer": "str",
+    "primaryLanguage": "str",
+    "style": "str",
+    "weight": "int",
+    "width": "int",
+    "isVariable": "bool",
+    "isColorFont": "bool",
+    "isMultilingual": "bool",
+    "supportedScripts": "str_list",
+}
+
+IMMUTABLE_METADATA_KEYS = {
+    "id",
+    "sha256",
+    "fileName",
+    "format",
+    "sizeBytes",
+    "libraryRelativePath",
+    "packageId",
+    "packageFileName",
+    "collection",
+    "collections",
+    "status",
+    "mtime",
+}
+
+
+def validate_and_coerce_metadata_value(key: str, raw_value):
+    """
+    Validates that `key` is an allowed mutable metadata attribute and coerces/validates
+    `raw_value` to its expected schema type. Raises ValueError on disallowed keys or invalid values.
+    """
+    if not key or not isinstance(key, str):
+        raise ValueError("Metadata key must be a non-empty string.")
+    if key in IMMUTABLE_METADATA_KEYS:
+        raise ValueError(f"Metadata key '{key}' is immutable and cannot be modified via metadata command.")
+    if key not in ALLOWED_METADATA_KEYS:
+        allowed_str = ", ".join(sorted(ALLOWED_METADATA_KEYS.keys()))
+        raise ValueError(f"Disallowed metadata key '{key}'. Allowed keys: {allowed_str}")
+
+    expected_type = ALLOWED_METADATA_KEYS[key]
+
+    if expected_type == "str":
+        if not isinstance(raw_value, str):
+            raise ValueError(f"Metadata key '{key}' requires a string value.")
+        cleaned = raw_value.strip()
+        if not cleaned:
+            raise ValueError(f"Metadata key '{key}' cannot be empty.")
+        assert_no_traversal(cleaned, key)
+        if key == "style" and cleaned.lower() not in {"normal", "italic", "oblique", "regular", "bold"}:
+            raise ValueError(f"Invalid style '{cleaned}'. Must be one of: normal, italic, oblique, regular, bold.")
+        return cleaned
+
+    if expected_type == "int":
+        if isinstance(raw_value, bool):
+            raise ValueError(f"Metadata key '{key}' requires an integer value, not boolean.")
+        try:
+            int_val = int(raw_value)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"Metadata key '{key}' requires an integer value, got '{raw_value}'.") from exc
+        if key == "weight" and not (1 <= int_val <= 1000):
+            raise ValueError(f"Invalid weight {int_val}: must be between 1 and 1000.")
+        if key == "width" and not (1 <= int_val <= 9):
+            raise ValueError(f"Invalid width {int_val}: must be between 1 and 9.")
+        return int_val
+
+    if expected_type == "bool":
+        if isinstance(raw_value, bool):
+            return raw_value
+        if isinstance(raw_value, str):
+            low = raw_value.strip().lower()
+            if low in {"true", "1", "yes"}:
+                return True
+            if low in {"false", "0", "no"}:
+                return False
+        raise ValueError(f"Metadata key '{key}' requires a boolean value (true/false), got '{raw_value}'.")
+
+    if expected_type == "str_list":
+        if isinstance(raw_value, list):
+            items = [str(x).strip() for x in raw_value if str(x).strip()]
+        elif isinstance(raw_value, str):
+            raw_s = raw_value.strip()
+            if raw_s.startswith("["):
+                try:
+                    parsed = json.loads(raw_s)
+                except json.JSONDecodeError as exc:
+                    raise ValueError(f"Invalid JSON list for '{key}': {raw_value}") from exc
+                if not isinstance(parsed, list) or not all(isinstance(x, str) for x in parsed):
+                    raise ValueError(f"Metadata key '{key}' requires a list of strings.")
+                items = [x.strip() for x in parsed if x.strip()]
+            else:
+                items = [part.strip() for part in raw_s.split(",") if part.strip()]
+        else:
+            raise ValueError(f"Metadata key '{key}' requires a list of strings.")
+        if not items:
+            raise ValueError(f"Metadata key '{key}' must contain at least one script tag.")
+        return items
+
+    raise ValueError(f"Unsupported metadata schema type '{expected_type}' for key '{key}'.")
+
+
 def handle_metadata(args):
     try:
         assert_no_traversal(args.identifier, "identifier")
+        key = args.key
+        val = validate_and_coerce_metadata_value(key, args.value)
     except ValueError as e:
         print(f"[-] {e}")
         return 1
@@ -272,9 +369,8 @@ def handle_metadata(args):
         print(f"[-] Font not found in state: {identifier}")
         return 1
 
-    key = args.key
-    val = args.value
-    font_rec[key] = val
+    if key in font_rec or key in ("familyName", "primaryLanguage"):
+        font_rec[key] = val
 
     # Bump metadata revision only
     new_rev = state_mgr.bump_metadata_revision()
