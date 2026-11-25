@@ -1,4 +1,10 @@
-# Fontivo Fonts — Official Typography Distribution Hub
+<div align="center">
+  <a href="https://github.com/Ahmedfahmy8308/Fontivo">
+    <img src="assets/fontivo-banner.png" alt="Fontivo Fonts — Type. Design. Deliver." width="860">
+  </a>
+  <br><br>
+  <h1>Fontivo Fonts — Official Typography Distribution Hub</h1>
+</div>
 
 [![Release](https://img.shields.io/badge/Release-v1.0.2-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.2)
 [![Total Fonts](https://img.shields.io/badge/Fonts-10%2C388-success.svg)](#typography-collection)
