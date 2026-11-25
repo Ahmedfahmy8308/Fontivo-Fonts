@@ -87,6 +87,9 @@ def ensure_manifest_urls(manifest, repo_name, version):
     meta_url = f"https://raw.githubusercontent.com/{repo_name}/v{clean_version}/Metadata"
 
     modified = False
+    if manifest.get("libraryVersion") != clean_version:
+        manifest["libraryVersion"] = clean_version
+        modified = True
     if manifest.get("packageBaseUrl") != base_url:
         manifest["packageBaseUrl"] = base_url
         modified = True

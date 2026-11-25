@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "libraryVersion": "1.0.2",
+  "libraryVersion": "1.0.3",
   "metadataRevision": 1,
   "releaseDate": "2026-11-25",
   "minimumFontivoAppVersion": "1.0.0",
@@ -18,7 +18,7 @@
       "id": "fontivo-essential",
       "name": "Fontivo Unified Typography",
       "type": "base",
-      "version": "1.0.2",
+      "version": "1.0.3",
       "fontCount": 10939,
       "familyCount": 4430,
       "packageCount": 15,

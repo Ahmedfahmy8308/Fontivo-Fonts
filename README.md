@@ -6,7 +6,7 @@
   <h1>Fontivo Fonts — Official Typography Distribution Hub</h1>
 </div>
 
-[![Release](https://img.shields.io/badge/Release-v1.0.2-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.2)
+[![Release](https://img.shields.io/badge/Release-v1.0.3-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.3)
 [![Total Fonts](https://img.shields.io/badge/Fonts-10%2C939-success.svg)](#typography-collection)
 [![Families](https://img.shields.io/badge/Families-4%2C430-informational.svg)](#typography-collection)
 [![Packages](https://img.shields.io/badge/Distribution%20Packages-15%20Archives-orange.svg)](#distribution-packages)
@@ -86,7 +86,7 @@ The collection is partitioned into 15 independent distribution packages (`~611 M
 | `fontivo-essential-015.zip` | 20 | Symbols, Icons, Dingbats & Ornaments |
 | **Total** | **10,939** | **Curated Production Typography Collection (864.0 MB)** |
 
-All packages are available under [GitHub Releases](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.0).
+All packages are available under [GitHub Releases](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.3).
 
 ---
 
