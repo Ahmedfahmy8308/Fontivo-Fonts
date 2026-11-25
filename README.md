@@ -7,10 +7,10 @@
 </div>
 
 [![Release](https://img.shields.io/badge/Release-v1.0.2-blue.svg)](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.2)
-[![Total Fonts](https://img.shields.io/badge/Fonts-10%2C388-success.svg)](#typography-collection)
-[![Families](https://img.shields.io/badge/Families-4%2C076-informational.svg)](#typography-collection)
+[![Total Fonts](https://img.shields.io/badge/Fonts-10%2C939-success.svg)](#typography-collection)
+[![Families](https://img.shields.io/badge/Families-4%2C430-informational.svg)](#typography-collection)
 [![Packages](https://img.shields.io/badge/Distribution%20Packages-15%20Archives-orange.svg)](#distribution-packages)
-[![Total Size](https://img.shields.io/badge/Compressed%20Size-~510%20MB-purple.svg)](#distribution-packages)
+[![Total Size](https://img.shields.io/badge/Compressed%20Size-~864%20MB-purple.svg)](#distribution-packages)
 [![License](https://img.shields.io/badge/License-OFL%20%2F%20Apache%202.0-lightgrey.svg)](#licensing)
 
 The official high-performance typography distribution and content delivery engine powering the **[Fontivo](https://github.com/Ahmedfahmy8308/Fontivo)** Creative Identity & Asset Management ecosystem — the unified desktop platform for managing brand identities, color palettes, ASE swatch exchanges, project workspaces, and live RAM typography activation.
@@ -19,15 +19,15 @@ The official high-performance typography distribution and content delivery engin
 
 ## Typography Collection
 
-Fontivo Fonts provides an extensively curated, validated library of **10,388 font files** grouped into **4,076 typographic families**, optimized for graphic designers, UI/UX engineers, and desktop publishing workflows:
+Fontivo Fonts provides an extensively curated, validated library of **10,939 font files** grouped into **4,430 typographic families**, optimized for graphic designers, UI/UX engineers, and desktop publishing workflows:
 
 | Script / Category | Fonts | Description & Highlights |
 | :--- | :---: | :--- |
-| **Latin** | 6,663 | Modern display, workhorse sans-serif, classic editorial serif, slab, geometric, and decorative typefaces. |
-| **Urdu (Arabic Script)** | 1,533 | Authentic Nastaliq, Naskh, and modern Arabic-script calligraphic typesetting suites. |
-| **Persian (Arabic Script)** | 1,249 | Comprehensive Nastaleeq, Shekasteh, and contemporary Arabic-script digital UI typography. |
-| **Arabic** | 943 | Kufi, Naskh, Thuluth, Ruq'ah, Diwani, and contemporary Arabic brand typography. |
-| **Total** | **10,388** | **4,076 Typographic Families** |
+| **Latin** | 7,146 | Modern display, workhorse sans-serif, classic editorial serif, slab, geometric, and decorative typefaces. |
+| **Urdu (Arabic Script)** | 1,565 | Authentic Nastaliq, Naskh, and modern Arabic-script calligraphic typesetting suites. |
+| **Persian (Arabic Script)** | 1,257 | Comprehensive Nastaleeq, Shekasteh, and contemporary Arabic-script digital UI typography. |
+| **Arabic** | 971 | Kufi, Naskh, Thuluth, Ruq'ah, Diwani, and contemporary Arabic brand typography. |
+| **Total** | **10,939** | **4,430 Typographic Families** |
 
 ---
 
@@ -69,22 +69,22 @@ The collection is partitioned into 15 independent distribution packages (`~611 M
 
 | Package Archive | Fonts | Category Focus |
 | :--- | :---: | :--- |
-| `fontivo-essential-001.zip` | 943 | Arabic Typography (Classic, Modern, Kufi, Naskh) |
-| `fontivo-essential-002.zip` | 487 | Latin Workhorses (Sans & Body Text) |
-| `fontivo-essential-003.zip` | 1,334 | Latin Typography (Comprehensive Display & Sans) |
-| `fontivo-essential-004.zip` | 1,438 | Latin Typography (Contemporary & Editorial) |
-| `fontivo-essential-005.zip` | 1,241 | Latin Display & Geometric |
-| `fontivo-essential-006.zip` | 288 | Latin Classic & Modern Serif |
-| `fontivo-essential-007.zip` | 325 | Latin Modern & Editorial |
-| `fontivo-essential-008.zip` | 835 | Latin Extended & Headline |
-| `fontivo-essential-009.zip` | 802 | Latin Decorative, Script & Brush |
-| `fontivo-essential-010.zip` | 1,162 | Urdu Nastaliq & Latin Typography |
-| `fontivo-essential-011.zip` | 251 | Urdu & Persian Typographic Suites |
-| `fontivo-essential-012.zip` | 436 | Persian, Indic & Hebrew Typography |
-| `fontivo-essential-013.zip` | 272 | Multilingual Suites & Global Typography |
-| `fontivo-essential-014.zip` | 538 | Artistic & Specialized Display Typography |
-| `fontivo-essential-015.zip` | 36 | Symbols, Icons, Dingbats & Ornaments |
-| **Total** | **10,388** | **Curated Production Typography Collection (510.0 MB)** |
+| `fontivo-essential-001.zip` | 970 | Arabic Typography (Classic, Modern, Kufi, Naskh) |
+| `fontivo-essential-002.zip` | 848 | Latin Workhorses (Sans & Body Text) |
+| `fontivo-essential-003.zip` | 842 | Latin Typography (Comprehensive Display & Sans) |
+| `fontivo-essential-004.zip` | 771 | Latin Typography (Contemporary & Editorial) |
+| `fontivo-essential-005.zip` | 1,022 | Latin Display & Geometric |
+| `fontivo-essential-006.zip` | 722 | Latin Classic & Modern Serif |
+| `fontivo-essential-007.zip` | 1,018 | Latin Modern & Editorial |
+| `fontivo-essential-008.zip` | 972 | Latin Extended & Headline |
+| `fontivo-essential-009.zip` | 936 | Latin Decorative, Script & Brush |
+| `fontivo-essential-010.zip` | 1,253 | Urdu Nastaliq & Latin Typography |
+| `fontivo-essential-011.zip` | 405 | Urdu & Persian Typographic Suites |
+| `fontivo-essential-012.zip` | 393 | Persian, Indic & Hebrew Typography |
+| `fontivo-essential-013.zip` | 372 | Multilingual Suites & Global Typography |
+| `fontivo-essential-014.zip` | 395 | Artistic & Specialized Display Typography |
+| `fontivo-essential-015.zip` | 20 | Symbols, Icons, Dingbats & Ornaments |
+| **Total** | **10,939** | **Curated Production Typography Collection (864.0 MB)** |
 
 All packages are available under [GitHub Releases](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.0).
 
