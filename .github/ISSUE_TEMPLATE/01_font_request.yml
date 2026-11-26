@@ -34,9 +34,7 @@ body:
         - Latin
         - Urdu
         - Persian
-        - Hebrew
-        - Indic
-        - Symbols & Icons
+        - Multilingual / Other
     validations:
       required: true
   - type: input

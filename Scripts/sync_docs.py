@@ -34,12 +34,12 @@ PACKAGE_CATEGORIES = {
     "pack-essential-007": ("Latin Contemporary & Modern Typography", "Latin Modern & Editorial"),
     "pack-essential-008": ("Latin Extended, Headline & Display Suites", "Latin Extended & Headline"),
     "pack-essential-009": ("Latin Decorative, Script, Cursive & Brush", "Latin Decorative, Script & Brush"),
-    "pack-essential-010": ("Urdu Nastaliq & Latin Typography", "Urdu Nastaliq & Latin Typography"),
-    "pack-essential-011": ("Urdu Calligraphic & Persian Typographic Suites", "Urdu & Persian Typographic Suites"),
-    "pack-essential-012": ("Persian, Indic & Hebrew Typography", "Persian, Indic & Hebrew Typography"),
-    "pack-essential-013": ("Multilingual Suites & Global Scripts", "Multilingual Suites & Global Typography"),
-    "pack-essential-014": ("Artistic, Display & Specialized Typography", "Artistic & Specialized Display Typography"),
-    "pack-essential-015": ("Typography Icons, Symbols, Dingbats & Ornaments", "Symbols, Icons, Dingbats & Ornaments"),
+    "pack-essential-010": ("Persian Typography & Display Families", "Persian Typography & Display Families"),
+    "pack-essential-011": ("Urdu Typography — Part I (Nastaliq & Naskh)", "Urdu Typography — Part I (Nastaliq & Naskh)"),
+    "pack-essential-012": ("Urdu Typography — Part II (Editorial & UI)", "Urdu Typography — Part II (Editorial & UI)"),
+    "pack-essential-013": ("Urdu Typography — Part III (Calligraphic & Sans)", "Urdu Typography — Part III (Calligraphic & Sans)"),
+    "pack-essential-014": ("Urdu Typography — Part IV (Display & Condensed)", "Urdu Typography — Part IV (Display & Condensed)"),
+    "pack-essential-015": ("Mixed Supplementary Pack (Arabic, Latin & Persian)", "Mixed Supplementary Pack (Arabic, Latin & Persian)"),
 }
 
 def sync_documentation():

@@ -75,12 +75,12 @@ The collection is partitioned into 15 independent distribution packages (`864.01
 | `fontivo-essential-007.zip` | 1,018 | Latin Modern & Editorial |
 | `fontivo-essential-008.zip` | 972 | Latin Extended & Headline |
 | `fontivo-essential-009.zip` | 936 | Latin Decorative, Script & Brush |
-| `fontivo-essential-010.zip` | 1,253 | Urdu Nastaliq & Latin Typography |
-| `fontivo-essential-011.zip` | 405 | Urdu & Persian Typographic Suites |
-| `fontivo-essential-012.zip` | 393 | Persian, Indic & Hebrew Typography |
-| `fontivo-essential-013.zip` | 372 | Multilingual Suites & Global Typography |
-| `fontivo-essential-014.zip` | 395 | Artistic & Specialized Display Typography |
-| `fontivo-essential-015.zip` | 20 | Symbols, Icons, Dingbats & Ornaments |
+| `fontivo-essential-010.zip` | 1,253 | Persian Typography & Display Families |
+| `fontivo-essential-011.zip` | 405 | Urdu Typography — Part I (Nastaliq & Naskh) |
+| `fontivo-essential-012.zip` | 393 | Urdu Typography — Part II (Editorial & UI) |
+| `fontivo-essential-013.zip` | 372 | Urdu Typography — Part III (Calligraphic & Sans) |
+| `fontivo-essential-014.zip` | 395 | Urdu Typography — Part IV (Display & Condensed) |
+| `fontivo-essential-015.zip` | 20 | Mixed Supplementary Pack (Arabic, Latin & Persian) |
 | **Total** | **10,939** | **Curated Production Typography Collection (864.0 MB)** |
 
 All packages are available under [GitHub Releases](https://github.com/Ahmedfahmy8308/Fontivo-Fonts/releases/tag/v1.0.3).
@@ -96,10 +96,7 @@ Fontivo-Fonts/
 │   ├── Arabic/Families/...
 │   ├── Latin/Families/...
 │   ├── Urdu/Families/...
-│   ├── Persian/Families/...
-│   ├── Hebrew/Families/...
-│   ├── Indic/Families/...
-│   └── Unclassified/Families/...
+│   └── Persian/Families/...
 ├── Manifests/
 │   └── manifest.json          # Canonical distribution manifest & package registry
 ├── Metadata/
@@ -139,7 +136,7 @@ python Scripts/update.py remove "FontName.ttf"
 ```
 
 ### Verifying Library Integrity
-Verifies that all 10,388 fonts in `Library/` and all 15 package archives in `Build/` physically match recorded SHA-256 states:
+Verifies that all 10,939 fonts in `Library/` and all 15 package archives in `Build/` physically match recorded SHA-256 states:
 ```bash
 python Scripts/scan.py
 ```

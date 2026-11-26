@@ -407,7 +407,7 @@ def main():
     add_p = subparsers.add_parser("add", help="Add a font to Library/ and rebuild package in ~1s")
     add_p.add_argument("font_path", help="Path to font binary (.ttf, .otf, .ttc)")
     add_p.add_argument("--category", "--language", dest="category", default=None,
-                       help="Category/Language folder (Arabic, Latin, Urdu, Persian, CJK, etc.)")
+                       help="Category/Language folder (Arabic, Latin, Persian, Urdu)")
     add_p.add_argument("--family", default=None, help="Optional font family name (auto-parsed if omitted)")
 
     # Remove

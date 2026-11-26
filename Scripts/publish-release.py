@@ -166,7 +166,7 @@ def generate_release_notes(version, packages_list, total_families=None, manifest
         "### Highlights",
         f"- **Canonical Collection**: Unified `fontivo-essential` distribution",
         f"- **Total Valid Fonts**: {total_fonts:,} font files across {total_families:,} typographic families",
-        f"- **Language Coverage**: Arabic, Latin, Urdu, Persian, CJK, Indic, Hebrew, and Unclassified",
+        f"- **Language Coverage**: Arabic, Latin, Persian, and Urdu",
         f"- **Distribution Packages**: {len(packages_list)} deterministic packages in `Build/`",
         f"- **Compressed Download Size**: ~{total_comp_mb:.2f} MB (Uncompressed: ~{total_uncomp_mb:.2f} MB)",
         f"- **Incremental Build Guarantee**: Content-addressed change detection (~1s single-font rebuilds)",
