@@ -11,7 +11,7 @@
 | Repo | Purpose | Link |
 | :--- | :--- | :--- |
 | **Fontivo-Fonts** (this repo) | 15 ZIP packs + SHA-256 manifest (`v1.0.3`) | `https://github.com/Ahmedfahmy8308/Fontivo-Fonts` |
-| **Fontivo-App** | Downloads, verifies SHA-256, extracts & activates packs in RAM | `https://github.com/Ahmedfahmy8308/Fontivo` |
+| **Fontivo-App** | Downloads, verifies SHA-256, extracts & activates packs in RAM (Desktop **`v1.1.1`**) | `https://github.com/Ahmedfahmy8308/Fontivo` |
 | **Fontivo-Site** | Displays live pack catalog, counts & release metadata | `https://github.com/Ahmedfahmy8308/Fontivo-Site` |
 
 ## 3. Cross-Repo Ripple Rules (What Must Sync Elsewhere)
