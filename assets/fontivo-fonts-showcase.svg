@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="1200" height="680" role="img" aria-labelledby="fontsShowcaseTitle fontsShowcaseDesc">
+  <title id="fontsShowcaseTitle">Fontivo Fonts — Multi-Script Typography Library Showcase</title>
+  <desc id="fontsShowcaseDesc">Animated showcase of Fontivo-Fonts v1.0.3 featuring 10,939 curated fonts across 4,430 families in Arabic, Latin, Urdu, and Persian scripts.</desc>
+
+  <defs>
+    <radialGradient id="ffBg" cx="50%" cy="35%" r="85%">
+      <stop offset="0%" stop-color="#291C2E"/>
+      <stop offset="65%" stop-color="#1D1322"/>
+      <stop offset="100%" stop-color="#140D17"/>
+    </radialGradient>
+    <linearGradient id="ffTitleGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FFF9F2"/>
+      <stop offset="70%" stop-color="#F5EBDD"/>
+      <stop offset="100%" stop-color="#F16B50"/>
+    </linearGradient>
+    <linearGradient id="ffCardGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26192C"/>
+      <stop offset="100%" stop-color="#1A1120"/>
+    </linearGradient>
+    <pattern id="ffDots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FFF9F2" fill-opacity="0.04"/>
+    </pattern>
+  </defs>
+
+  <style>
+    <![CDATA[
+    @keyframes subtlePulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    @keyframes slideAccent {
+      0% { transform: scaleX(0.35); opacity: 0.6; }
+      50% { transform: scaleX(1); opacity: 1; }
+      100% { transform: scaleX(0.35); opacity: 0.6; }
+    }
+    .dot-pulse { animation: subtlePulse 2.4s ease-in-out infinite; }
+    .accent-bar { transform-origin: left center; animation: slideAccent 6s ease-in-out infinite; }
+
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Tajawal, Roboto, sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', 'Segoe UI Mono', Consolas, monospace;
+    }
+    .arabic {
+      font-family: 'Tajawal', 'Amiri', 'Segoe UI', sans-serif;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+    ]]>
+  </style>
+
+  <!-- Background -->
+  <rect width="1200" height="680" rx="24" fill="url(#ffBg)"/>
+  <rect width="1200" height="680" rx="24" fill="url(#ffDots)"/>
+  <rect x="1" y="1" width="1198" height="678" rx="23" fill="none" stroke="#FFF9F2" stroke-opacity="0.1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(48, 48)">
+    <g transform="translate(0, -24) scale(0.072)">
+      <path fill="#F16B50" d="M86 177c0-67 49-116 116-116h211c14 0 22 15 14 27l-43 66H204c-31 0-53 16-69 44l-49 85z"/>
+      <path fill="#B7A1D9" d="M76 350c0-67 49-116 116-116h177c14 0 22 15 14 27l-43 66H194c-31 0-53 16-69 44l-49 85z"/>
+    </g>
+
+    <text x="48" y="2" font-size="26" font-weight="800" fill="url(#ffTitleGrad)">
+      Fontivo Fonts — Curated Typography Collection
+    </text>
+    <text x="48" y="26" font-size="14" fill="#F5EBDD" fill-opacity="0.78">
+      10,939 deduplicated fonts across 4,430 families packaged in 15 SHA-256 verified archives (v1.0.3)
+    </text>
+
+    <g transform="translate(918, -14)">
+      <rect width="186" height="32" rx="16" fill="#291C2E" stroke="#F16B50" stroke-opacity="0.55" stroke-width="1.2"/>
+      <circle cx="18" cy="16" r="4" fill="#F16B50" class="dot-pulse"/>
+      <text x="32" y="20" font-size="11.5" font-weight="700" fill="#FFF9F2" class="mono">RELEASE v1.0.3</text>
+    </g>
+  </g>
+
+  <!-- Row 1: Arabic & Latin Showcase Cards -->
+  <!-- Card 1: Arabic Script -->
+  <g transform="translate(48, 108)">
+    <rect width="536" height="252" rx="16" fill="url(#ffCardGrad)" stroke="#46324E" stroke-width="1.2"/>
+    <rect x="24" y="22" width="4" height="24" rx="2" fill="#F16B50"/>
+    <text x="38" y="39" font-size="15" font-weight="800" fill="#FFF9F2">Arabic Script &amp; Calligraphy</text>
+    <text x="512" y="39" text-anchor="end" font-size="12" font-weight="700" fill="#F16B50" class="mono">971 FONTS</text>
+
+    <line x1="24" y1="62" x2="512" y2="62" stroke="#3D2B45" stroke-width="1"/>
+
+    <text x="512" y="128" text-anchor="end" font-size="30" font-weight="800" fill="#FFF9F2" class="arabic">
+      جَمَالُ الخَطِّ العَرَبِيِّ — نَسْخٌ وَكُوفِيٌّ وَثُلُث
+    </text>
+    <text x="24" y="166" font-size="12.5" fill="#B7A1D9">
+      Full Tashkeel diacritics, Eastern numerals, and editorial Naskh &amp; Kufic display weights
+    </text>
+
+    <g transform="translate(24, 198)" class="mono" font-size="10.5" font-weight="600">
+      <rect x="0" y="0" width="94" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="47" y="17" text-anchor="middle" fill="#FFF9F2">TASHKEEL ✓</text>
+
+      <rect x="104" y="0" width="84" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="146" y="17" text-anchor="middle" fill="#B7A1D9">OT: LIGA</text>
+
+      <rect x="198" y="0" width="118" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="257" y="17" text-anchor="middle" fill="#F16B50">PACK 001 ZIP</text>
+    </g>
+    <rect x="24" y="238" width="488" height="3" rx="1.5" fill="#F16B50" class="accent-bar"/>
+  </g>
+
+  <!-- Card 2: Latin Typography -->
+  <g transform="translate(616, 108)">
+    <rect width="536" height="252" rx="16" fill="url(#ffCardGrad)" stroke="#46324E" stroke-width="1.2"/>
+    <rect x="24" y="22" width="4" height="24" rx="2" fill="#B7A1D9"/>
+    <text x="38" y="39" font-size="15" font-weight="800" fill="#FFF9F2">Latin Display, Sans &amp; Editorial</text>
+    <text x="512" y="39" text-anchor="end" font-size="12" font-weight="700" fill="#B7A1D9" class="mono">7,146 FONTS</text>
+
+    <line x1="24" y1="62" x2="512" y2="62" stroke="#3D2B45" stroke-width="1"/>
+
+    <text x="24" y="128" font-size="30" font-weight="900" letter-spacing="-0.6" fill="#FFF9F2">
+      Aa Bb Gg Rr 0123456789
+    </text>
+    <text x="24" y="166" font-size="12.5" fill="#B7A1D9">
+      Geometric sans-serifs, variable families, tabular UI numerals &amp; classic serifs
+    </text>
+
+    <g transform="translate(24, 198)" class="mono" font-size="10.5" font-weight="600">
+      <rect x="0" y="0" width="94" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="47" y="17" text-anchor="middle" fill="#FFF9F2">TABULAR NUM</text>
+
+      <rect x="104" y="0" width="90" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="149" y="17" text-anchor="middle" fill="#B7A1D9">VAR 100-900</text>
+
+      <rect x="204" y="0" width="128" height="26" rx="6" fill="#140D17" stroke="#3D2B45"/>
+      <text x="268" y="17" text-anchor="middle" fill="#F16B50">PACKS 002–009</text>
+    </g>
+    <rect x="24" y="238" width="488" height="3" rx="1.5" fill="#B7A1D9" class="accent-bar"/>
+  </g>
+
+  <!-- Row 2: Urdu & Persian Cards + Summary Strip -->
+  <!-- Card 3: Urdu Script -->
+  <g transform="translate(48, 382)">
+    <rect width="536" height="202" rx="16" fill="url(#ffCardGrad)" stroke="#46324E" stroke-width="1.2"/>
+    <rect x="24" y="20" width="4" height="22" rx="2" fill="#B7A1D9"/>
+    <text x="38" y="36" font-size="15" font-weight="800" fill="#FFF9F2">Urdu Nastaliq &amp; Naskh</text>
+    <text x="512" y="36" text-anchor="end" font-size="12" font-weight="700" fill="#B7A1D9" class="mono">1,565 FONTS</text>
+
+    <line x1="24" y1="56" x2="512" y2="56" stroke="#3D2B45" stroke-width="1"/>
+
+    <text x="512" y="108" text-anchor="end" font-size="25" font-weight="700" fill="#FFF9F2" class="arabic">
+      نستعلیق اور جدید اردو خطاطی کا حسین امتزاج
+    </text>
+    <text x="24" y="142" font-size="12" fill="#F5EBDD" fill-opacity="0.75">
+      Authentic Nastaliq ligatures and extended Urdu glyphs (Packs 010 &amp; 011)
+    </text>
+    <text x="24" y="176" font-size="10.5" font-weight="600" fill="#B7A1D9" class="mono">
+      OFL / APACHE 2.0 • SHA-256 VERIFIED ARCHIVES
+    </text>
+  </g>
+
+  <!-- Card 4: Persian Script -->
+  <g transform="translate(616, 382)">
+    <rect width="536" height="202" rx="16" fill="url(#ffCardGrad)" stroke="#46324E" stroke-width="1.2"/>
+    <rect x="24" y="20" width="4" height="22" rx="2" fill="#F16B50"/>
+    <text x="38" y="36" font-size="15" font-weight="800" fill="#FFF9F2">Persian &amp; Multilingual UI</text>
+    <text x="512" y="36" text-anchor="end" font-size="12" font-weight="700" fill="#F16B50" class="mono">1,257 FONTS</text>
+
+    <line x1="24" y1="56" x2="512" y2="56" stroke="#3D2B45" stroke-width="1"/>
+
+    <text x="512" y="108" text-anchor="end" font-size="25" font-weight="700" fill="#FFF9F2" class="arabic">
+      تایپوگرافی مدرن فارسی و فونت‌های نشر دیجیتال
+    </text>
+    <text x="24" y="142" font-size="12" fill="#F5EBDD" fill-opacity="0.75">
+      Clean Persian glyphs (گ، چ، پ، ژ، ڤ), Shekasteh &amp; UI packs (Packs 011–015)
+    </text>
+    <text x="24" y="176" font-size="10.5" font-weight="600" fill="#F16B50" class="mono">
+      15 PACKAGES • ZERO CORRUPT FILES • 864.01 MB TOTAL
+    </text>
+  </g>
+
+  <!-- Footer -->
+  <g transform="translate(48, 606)">
+    <rect width="1104" height="46" rx="12" fill="#1D1322" stroke="#46324E" stroke-width="1"/>
+    <text x="28" y="28" font-size="11.5" font-weight="700" fill="#FFF9F2">
+      4,430 Families
+      <tspan font-weight="400" fill="#B7A1D9"> • Curated by Eng. Mohamed Elashwah &amp; Engineered by Eng. Ahmed Fahmy</tspan>
+    </text>
+    <text x="1076" y="28" text-anchor="end" font-size="11" font-weight="700" fill="#F16B50" class="mono">
+      FONTIVO-FONTS v1.0.3
+    </text>
+  </g>
+</svg>

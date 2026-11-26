@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 540" width="1200" height="540" role="img" aria-labelledby="deliveryTitle deliveryDesc">
+  <title id="deliveryTitle">Fontivo Fonts — Decoupled SHA-256 Delivery Architecture</title>
+  <desc id="deliveryDesc">Architectural pipeline showing how Fontivo-Fonts delivers 15 deterministic zip packs via GitHub Release v1.0.3 to Fontivo Desktop SafeZipExtractor and Win32 FR_PRIVATE RAM.</desc>
+
+  <defs>
+    <radialGradient id="fdBg" cx="50%" cy="35%" r="85%">
+      <stop offset="0%" stop-color="#291C2E"/>
+      <stop offset="65%" stop-color="#1D1322"/>
+      <stop offset="100%" stop-color="#140D17"/>
+    </radialGradient>
+    <linearGradient id="fdCard" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#26192C"/>
+      <stop offset="100%" stop-color="#1A1120"/>
+    </linearGradient>
+    <pattern id="fdDots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FFF9F2" fill-opacity="0.04"/>
+    </pattern>
+    <marker id="fdArrowCoral" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#F16B50"/>
+    </marker>
+    <marker id="fdArrowLav" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto">
+      <path d="M 0 1.5 L 9 5 L 0 8.5 z" fill="#B7A1D9"/>
+    </marker>
+  </defs>
+
+  <style>
+    <![CDATA[
+    @keyframes dashMove {
+      0% { stroke-dashoffset: 48; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .fd-dash {
+      stroke-dasharray: 6 10;
+      animation: dashMove 2.2s linear infinite;
+    }
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', 'Segoe UI Mono', Consolas, monospace;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; }
+    }
+    ]]>
+  </style>
+
+  <rect width="1200" height="540" rx="24" fill="url(#fdBg)"/>
+  <rect width="1200" height="540" rx="24" fill="url(#fdDots)"/>
+  <rect x="1" y="1" width="1198" height="538" rx="23" fill="none" stroke="#FFF9F2" stroke-opacity="0.1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <g transform="translate(48, 46)">
+    <text x="0" y="0" font-size="25" font-weight="800" fill="#FFF9F2">
+      Decoupled Content-Addressed Font Delivery Pipeline
+    </text>
+    <text x="0" y="24" font-size="13.5" fill="#F5EBDD" fill-opacity="0.78">
+      Deterministic ZIP packaging with SHA-256 verification, HTTP Range resume &amp; SafeZipExtractor defense
+    </text>
+  </g>
+
+  <!-- 4 Segmented Pipeline Nodes (clean connectors terminating outside opaque circles) -->
+  <g transform="translate(48, 102)">
+    <rect width="1104" height="112" rx="16" fill="url(#fdCard)" stroke="#46324E" stroke-width="1.2"/>
+
+    <line x1="146" y1="48" x2="378" y2="48" stroke="#3D2B45" stroke-width="2"/>
+    <line x1="146" y1="48" x2="378" y2="48" stroke="#F16B50" stroke-width="2" class="fd-dash" marker-end="url(#fdArrowCoral)"/>
+
+    <line x1="434" y1="48" x2="666" y2="48" stroke="#3D2B45" stroke-width="2"/>
+    <line x1="434" y1="48" x2="666" y2="48" stroke="#B7A1D9" stroke-width="2" class="fd-dash" marker-end="url(#fdArrowLav)"/>
+
+    <line x1="722" y1="48" x2="954" y2="48" stroke="#3D2B45" stroke-width="2"/>
+    <line x1="722" y1="48" x2="954" y2="48" stroke="#F16B50" stroke-width="2" class="fd-dash" marker-end="url(#fdArrowCoral)"/>
+
+    <g transform="translate(120, 48)">
+      <circle cx="0" cy="0" r="22" fill="#291C2E" stroke="#F16B50" stroke-width="2"/>
+      <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#FFF9F2" class="mono">1</text>
+      <text x="0" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#FFF9F2">Manifest JSON</text>
+    </g>
+
+    <g transform="translate(408, 48)">
+      <circle cx="0" cy="0" r="22" fill="#291C2E" stroke="#B7A1D9" stroke-width="2"/>
+      <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#FFF9F2" class="mono">2</text>
+      <text x="0" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#FFF9F2">15 Release Packs</text>
+    </g>
+
+    <g transform="translate(696, 48)">
+      <circle cx="0" cy="0" r="22" fill="#291C2E" stroke="#F16B50" stroke-width="2"/>
+      <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#FFF9F2" class="mono">3</text>
+      <text x="0" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#FFF9F2">SHA-256 &amp; SafeZip</text>
+    </g>
+
+    <g transform="translate(984, 48)">
+      <circle cx="0" cy="0" r="22" fill="#291C2E" stroke="#B7A1D9" stroke-width="2"/>
+      <text x="0" y="5" text-anchor="middle" font-size="14" font-weight="800" fill="#FFF9F2" class="mono">4</text>
+      <text x="0" y="42" text-anchor="middle" font-size="12" font-weight="700" fill="#B7A1D9">RAM FR_PRIVATE</text>
+    </g>
+  </g>
+
+  <!-- 3 Architecture Pillar Cards -->
+  <g transform="translate(48, 236)">
+    <!-- Col 1 -->
+    <rect x="0" y="0" width="340" height="252" rx="16" fill="url(#fdCard)" stroke="#46324E" stroke-width="1.2"/>
+    <text x="22" y="34" font-size="14" font-weight="800" fill="#F16B50">Fontivo-Fonts Repository</text>
+    <line x1="22" y1="48" x2="318" y2="48" stroke="#3D2B45"/>
+    <text x="22" y="78" font-size="12.5" font-weight="700" fill="#FFF9F2">Deterministic Archive Build</text>
+    <text x="22" y="98" font-size="11.5" fill="#B7A1D9">15 packs split cleanly by script</text>
+    <text x="22" y="132" font-size="12.5" font-weight="700" fill="#FFF9F2">Canonical SHA-256 Checksums</text>
+    <text x="22" y="152" font-size="11.5" fill="#B7A1D9">Every archive verified before publish</text>
+    <text x="22" y="186" font-size="12.5" font-weight="700" fill="#FFF9F2">Deduplicated OpenType Catalog</text>
+    <text x="22" y="206" font-size="11.5" fill="#B7A1D9">10,939 unique files • 4,430 families</text>
+    <text x="22" y="234" font-size="10.5" fill="#F16B50" class="mono">Manifests/manifest.json</text>
+
+    <!-- Col 2 -->
+    <g transform="translate(382, 0)">
+      <rect x="0" y="0" width="340" height="252" rx="16" fill="url(#fdCard)" stroke="#B7A1D9" stroke-opacity="0.45" stroke-width="1.2"/>
+      <text x="22" y="34" font-size="14" font-weight="800" fill="#B7A1D9">GitHub Release v1.0.3</text>
+      <line x1="22" y1="48" x2="318" y2="48" stroke="#3D2B45"/>
+      <text x="22" y="78" font-size="12.5" font-weight="700" fill="#FFF9F2">On-Demand Pack Streaming</text>
+      <text x="22" y="98" font-size="11.5" fill="#B7A1D9">Download only the scripts you need</text>
+      <text x="22" y="132" font-size="12.5" font-weight="700" fill="#FFF9F2">HTTP Range Resumption</text>
+      <text x="22" y="152" font-size="11.5" fill="#B7A1D9">Reliable pause &amp; resume recovery</text>
+      <text x="22" y="186" font-size="12.5" font-weight="700" fill="#FFF9F2">Compact Distribution Size</text>
+      <text x="22" y="206" font-size="11.5" fill="#B7A1D9">864.01 MB compressed (1.64 GB raw)</text>
+      <text x="22" y="234" font-size="10.5" fill="#B7A1D9" class="mono">fontivo-essential-001..015.zip</text>
+    </g>
+
+    <!-- Col 3 -->
+    <g transform="translate(764, 0)">
+      <rect x="0" y="0" width="340" height="252" rx="16" fill="url(#fdCard)" stroke="#46324E" stroke-width="1.2"/>
+      <text x="22" y="34" font-size="14" font-weight="800" fill="#FFF9F2">Fontivo Desktop Vault</text>
+      <line x1="22" y1="48" x2="318" y2="48" stroke="#3D2B45"/>
+      <text x="22" y="78" font-size="12.5" font-weight="700" fill="#FFF9F2">SafeZipExtractor Guard</text>
+      <text x="22" y="98" font-size="11.5" fill="#B7A1D9">Blocks Zip-Slip &amp; decompression bombs</text>
+      <text x="22" y="132" font-size="12.5" font-weight="700" fill="#FFF9F2">Zero Registry Bloat</text>
+      <text x="22" y="152" font-size="11.5" fill="#B7A1D9">Loads directly via Win32 FR_PRIVATE</text>
+      <text x="22" y="186" font-size="12.5" font-weight="700" fill="#FFF9F2">Auto Pack Update Alerts</text>
+      <text x="22" y="206" font-size="11.5" fill="#B7A1D9">Detects new library tags on launch</text>
+      <text x="22" y="234" font-size="10.5" fill="#F16B50" class="mono">100% LOCAL-FIRST CACHE</text>
+    </g>
+  </g>
+</svg>

@@ -15,11 +15,23 @@
 
 The official high-performance typography distribution and content delivery engine powering the **[Fontivo](https://github.com/Ahmedfahmy8308/Fontivo)** Creative Identity & Asset Management ecosystem — the unified desktop platform for managing brand identities, color palettes, ASE swatch exchanges, project workspaces, and live RAM typography activation.
 
+<div align="center">
+  <a href="assets/fontivo-fonts-showcase.svg">
+    <img src="assets/fontivo-fonts-showcase.svg" alt="Fontivo Fonts — Curated Multi-Script Typography Collection" width="900">
+  </a>
+</div>
+
 ---
 
 ## Typography Collection
 
 Fontivo Fonts provides an extensively curated, validated library of **10,939 font files** grouped into **4,430 typographic families**, optimized for graphic designers, UI/UX engineers, and desktop publishing workflows:
+
+<div align="center">
+  <a href="assets/fontivo-fonts-distribution.svg">
+    <img src="assets/fontivo-fonts-distribution.svg" alt="Fontivo Fonts v1.0.3 Script Breakdown" width="900">
+  </a>
+</div>
 
 | Script / Category | Fonts | Description & Highlights |
 | :--- | :---: | :--- |
@@ -33,28 +45,13 @@ Fontivo Fonts provides an extensively curated, validated library of **10,939 fon
 
 ## Distribution Architecture
 
-Fontivo employs a **decoupled, content-addressed delivery architecture**. Font binaries are distributed in **15 deterministic, highly-compressed packages** hosted on GitHub Releases, while repository metadata remains lightweight (< 15 MB) for instant synchronization.
+Fontivo employs a **decoupled, content-addressed delivery architecture**. Font binaries are distributed in **15 deterministic, highly-compressed packages** hosted on GitHub Releases (`864.01 MB` total), while repository metadata remains lightweight (< 15 MB) for instant synchronization.
 
-```
-                           +--------------------------------+
-                           |  Fontivo-Fonts (Git Repo)      |
-                           |  Manifests, Metadata & Tooling |
-                           +---------------+----------------+
-                                           |
-                               Reads Manifest | (SHA-256 Verified)
-                                           v
-                           +--------------------------------+
-                           |  GitHub Releases (v1.0.2)      |
-                           |  15 Deterministic Archives     | (~510 MB Total)
-                           +---------------+----------------+
-                                           |
-                              On-Demand    | Package Download
-                                           v
-                           +--------------------------------+
-                           |  Fontivo Desktop Application   |
-                           |  Instant Activation & Caching  |
-                           +--------------------------------+
-```
+<div align="center">
+  <a href="assets/fontivo-fonts-delivery.svg">
+    <img src="assets/fontivo-fonts-delivery.svg" alt="Fontivo Fonts Decoupled SHA-256 Delivery Architecture" width="900">
+  </a>
+</div>
 
 ### Key Architectural Advantages
 - **On-Demand Package Streaming**: The Fontivo desktop application downloads only the packages requested by the user rather than forcing a monolithic multi-gigabyte download.
@@ -65,7 +62,7 @@ Fontivo employs a **decoupled, content-addressed delivery architecture**. Font b
 
 ## Distribution Packages
 
-The collection is partitioned into 15 independent distribution packages (`~611 MB` total compressed size):
+The collection is partitioned into 15 independent distribution packages (`864.01 MB` total compressed size):
 
 | Package Archive | Fonts | Category Focus |
 | :--- | :---: | :--- |

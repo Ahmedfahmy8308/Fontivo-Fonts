@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-labelledby="distTitle distDesc">
+  <title id="distTitle">Fontivo Fonts v1.0.3 — Script Breakdown</title>
+  <desc id="distDesc">Script distribution across the 10,939 curated fonts in Fontivo-Fonts v1.0.3: Latin 7,146, Urdu 1,565, Persian 1,257, and Arabic 971.</desc>
+
+  <defs>
+    <radialGradient id="distBg" cx="50%" cy="35%" r="85%">
+      <stop offset="0%" stop-color="#291C2E"/>
+      <stop offset="65%" stop-color="#1D1322"/>
+      <stop offset="100%" stop-color="#140D17"/>
+    </radialGradient>
+    <linearGradient id="distCoral" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#F16B50"/>
+      <stop offset="100%" stop-color="#D9573D"/>
+    </linearGradient>
+    <linearGradient id="distLav" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#B7A1D9"/>
+      <stop offset="100%" stop-color="#8F77B5"/>
+    </linearGradient>
+    <pattern id="distDots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#FFF9F2" fill-opacity="0.04"/>
+    </pattern>
+  </defs>
+
+  <style>
+    <![CDATA[
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+    }
+    .mono {
+      font-family: 'JetBrains Mono', 'Segoe UI Mono', Consolas, monospace;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      animate { display: none !important; }
+    }
+    ]]>
+  </style>
+
+  <rect width="1200" height="420" rx="24" fill="url(#distBg)"/>
+  <rect width="1200" height="420" rx="24" fill="url(#distDots)"/>
+  <rect x="1" y="1" width="1198" height="418" rx="23" fill="none" stroke="#FFF9F2" stroke-opacity="0.1" stroke-width="1.5"/>
+
+  <g transform="translate(48, 46)">
+    <text x="0" y="0" font-size="23" font-weight="800" fill="#FFF9F2">
+      Script Distribution — 10,939 Verified Fonts
+    </text>
+    <text x="0" y="23" font-size="13.5" fill="#F5EBDD" fill-opacity="0.78">
+      Balanced multi-script typography across 4 scripts and 4,430 families (Release v1.0.3)
+    </text>
+  </g>
+
+  <g transform="translate(48, 102)">
+    <rect width="1104" height="278" rx="16" fill="#1D1322" stroke="#46324E" stroke-width="1.2"/>
+
+    <!-- Row 1: Latin -->
+    <g transform="translate(0, 34)">
+      <text x="200" y="20" text-anchor="end" font-size="14" font-weight="700" fill="#FFF9F2">Latin &amp; Display</text>
+      <rect x="220" y="4" width="660" height="24" rx="12" fill="#FFF9F2" fill-opacity="0.06"/>
+      <rect x="220" y="4" width="431" height="24" rx="12" fill="url(#distLav)">
+        <animate attributeName="width" from="0" to="431" dur="0.8s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/>
+      </rect>
+      <text x="898" y="20" font-size="13.5" font-weight="700" fill="#FFF9F2" class="mono">
+        7,146 <tspan font-weight="500" fill="#B7A1D9">(65.3%)</tspan>
+      </text>
+    </g>
+
+    <!-- Row 2: Urdu -->
+    <g transform="translate(0, 96)">
+      <text x="200" y="20" text-anchor="end" font-size="14" font-weight="700" fill="#FFF9F2">Urdu Nastaliq</text>
+      <rect x="220" y="4" width="660" height="24" rx="12" fill="#FFF9F2" fill-opacity="0.06"/>
+      <rect x="220" y="4" width="95" height="24" rx="12" fill="url(#distCoral)">
+        <animate attributeName="width" from="0" to="95" dur="0.9s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/>
+      </rect>
+      <text x="898" y="20" font-size="13.5" font-weight="700" fill="#FFF9F2" class="mono">
+        1,565 <tspan font-weight="500" fill="#F16B50">(14.3%)</tspan>
+      </text>
+    </g>
+
+    <!-- Row 3: Persian -->
+    <g transform="translate(0, 158)">
+      <text x="200" y="20" text-anchor="end" font-size="14" font-weight="700" fill="#FFF9F2">Persian (Farsi)</text>
+      <rect x="220" y="4" width="660" height="24" rx="12" fill="#FFF9F2" fill-opacity="0.06"/>
+      <rect x="220" y="4" width="76" height="24" rx="12" fill="url(#distLav)">
+        <animate attributeName="width" from="0" to="76" dur="1.0s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/>
+      </rect>
+      <text x="898" y="20" font-size="13.5" font-weight="700" fill="#FFF9F2" class="mono">
+        1,257 <tspan font-weight="500" fill="#B7A1D9">(11.5%)</tspan>
+      </text>
+    </g>
+
+    <!-- Row 4: Arabic -->
+    <g transform="translate(0, 220)">
+      <text x="200" y="20" text-anchor="end" font-size="14" font-weight="700" fill="#FFF9F2">Arabic Classic &amp; Modern</text>
+      <rect x="220" y="4" width="660" height="24" rx="12" fill="#FFF9F2" fill-opacity="0.06"/>
+      <rect x="220" y="4" width="59" height="24" rx="12" fill="url(#distCoral)">
+        <animate attributeName="width" from="0" to="59" dur="1.1s" fill="freeze" calcMode="spline" keySplines=".2 .8 .2 1" keyTimes="0;1"/>
+      </rect>
+      <text x="898" y="20" font-size="13.5" font-weight="700" fill="#FFF9F2" class="mono">
+        971 <tspan font-weight="500" fill="#F16B50">(8.9%)</tspan>
+      </text>
+    </g>
+  </g>
+</svg>
